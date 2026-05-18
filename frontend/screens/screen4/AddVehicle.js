@@ -67,65 +67,40 @@ const AddVehicle = (props) => {
     }
   };
   //de cámara
-  // const takePhoto = async () => {
-
-  //   const permission = await ImagePicker.requestCameraPermissionsAsync();   //petición permisos
-
-  //   if (!permission.granted) {
-  //     Alert.alert('Permiso de cámara denegado');
-  //     return;
-  //   }
-
-  //   const result = await ImagePicker.launchCameraAsync({    //abre cámara
-
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-
-  //   });
-
-  //   if (!result.canceled) {
-
-  //     setImage(result.assets[0].uri);   //guarda URI
-
-  //   }
-
-  // };
-
   const takePhoto = async () => {
-    try {
-      const permission = await ImagePicker.requestCameraPermissionsAsync();
 
-      console.log('Permiso:', permission);
+    const permission = await ImagePicker.requestCameraPermissionsAsync();   //petición permisos
 
-      if (permission.status !== 'granted') {
-        Alert.alert('Permiso de cámara denegado');
-        return;
-      }
-
-      const result = await ImagePicker.launchCameraAsync();
-
-      console.log('Resultado cámara:', result);
-
-      if (!result.canceled) {
-        setImage(result.assets[0].uri);
-      }
-
-    } catch (error) {
-      console.log('Error cámara:', error);
-      Alert.alert('Error', 'No se pudo abrir la cámara');
+    if (!permission.granted) {
+      Alert.alert('Permiso de cámara denegado');
+      return;
     }
-  };
 
-  //de galería
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync();
+    const result = await ImagePicker.launchCameraAsync({    //abre cámara
+
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+
+    });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+
+      setImage(result.assets[0].uri);   //guarda URI
+
     }
+
   };
+
+  //de galería, TODO añadir botón
+  // const pickImage = async () => {
+  //   const result = await ImagePicker.launchImageLibraryAsync();
+
+  //   if (!result.canceled) {
+  //     setImage(result.assets[0].uri);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
