@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   Text,
   View,
@@ -9,11 +9,13 @@ import {
   Image,
   Alert,  //nuevo alert
 } from 'react-native';
+import Context from '../../context/Context';
 
 const Screen1 = (props) => {
   const [screen, setScreen] = useState('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(Context);  //objeto, no array
 
   // function handleLogin() {
   //   alert('Login realizado');
@@ -38,8 +40,10 @@ const Screen1 = (props) => {
         Alert.alert('Error', data.message || 'No se pudo iniciar sesión');
         return;
       }
+      //
+      login(data.user);
       //popup
-      Alert.alert('Éxito', data.message);
+      Alert.alert('Log in correcto', data.message);
       //lo saco del botón, para que solo navegue si res OK
       props.navigation.navigate('Home');
 

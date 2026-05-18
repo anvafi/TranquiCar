@@ -1,14 +1,3 @@
-// import { createContext, useState } from 'react';
-// const Context = createContext();
-// export const Provider = ({ children }) => {
-//     const [counter, setCounter] = useState(0);
-//     return (
-//         <Context.Provider value={{ counter, setCounter }}>
-//             {children}
-//         </Context.Provider>
-//     );
-// };
-// export default Context;
 import { createContext, useState } from 'react';
 
 const Context = createContext();
@@ -36,6 +25,12 @@ export const Provider = ({ children }) => {
             {children}
         </Context.Provider>
     );
+    //     const [counter, setCounter] = useState(0);
+    //     return (
+    //         <Context.Provider value={{ counter, setCounter }}>
+    //             {children}
+    //         </Context.Provider>
+    //     );
 };
 
 export default Context;

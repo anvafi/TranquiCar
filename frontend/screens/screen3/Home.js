@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, SafeAreaView, Pressable } from 'react-native';
+import Context from '../../context/Context';
 
 export default function AddVehicle(props) {
+
+  const { user } = useContext(Context);
+
   const [vehicles, setVehicles] = useState([
     {
       id: 1,
@@ -40,7 +44,7 @@ export default function AddVehicle(props) {
           <View style={styles.leftColumn}>
             <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" />
             <Text style={styles.vehicleTitle}>{item.brand} {item.model}</Text>
-                    <Text style={[styles.statusText, { color: item.statusColor }]}>{item.status}</Text>
+            <Text style={[styles.statusText, { color: item.statusColor }]}>{item.status}</Text>
           </View>
 
           {/* Lado Derecho: Info Técnica */}
@@ -49,7 +53,7 @@ export default function AddVehicle(props) {
             <Text style={styles.infoText}>{item.mileage}</Text>
             <Text style={styles.infoText}>{item.transmission}</Text>
             <Pressable onPress={() => props.navigation.navigate('MyVehicle')}>
-            <Text style={styles.arrowIcon}>{'>'}</Text>
+              <Text style={styles.arrowIcon}>{'>'}</Text>
             </Pressable>
           </View>
         </View>
@@ -60,14 +64,14 @@ export default function AddVehicle(props) {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.logoContainer}>
-          <Image 
+        <View style={styles.logoContainer}>
+          <Image
             source={require('../../assets/logoX.png')}
             style={styles.logo}
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.headerTitle}>Garaje</Text>
+        <Text style={styles.headerTitle}>Garaje de {user.name}</Text>
         <Text style={styles.subTitle}>Tus vehículos</Text>
         <VehicleList />
       </ScrollView>
@@ -139,14 +143,14 @@ const styles = StyleSheet.create({
     color: '#8e8e93',
     marginBottom: 5,
   },
- logoContainer: {
-    width: '100%',    
-    alignItems: 'center',    
-    justifyContent: 'center', 
-    marginVertical: 10,      
+  logoContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
   logo: {
-    width: 120, 
+    width: 120,
     height: 120,
   },
   arrowIcon: {
@@ -155,18 +159,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    position: 'absolute',     
-    bottom: 30,      
-    right: 30,  
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
     backgroundColor: '#333',
-    width: 50,                
-    height: 50,               
-    borderRadius: 25,      
-    justifyContent: 'center', 
-    alignItems: 'center',   
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
     // Sombras para que resalte
-    elevation: 5,      
-    shadowColor: '#000',      
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
   textButton: {
     margin: 24,
     fontSize: 30,
-    color:'white',
+    color: 'white',
     textAlign: 'center'
   },
 });
