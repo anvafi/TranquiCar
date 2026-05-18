@@ -6,7 +6,7 @@ const router = express.Router();
 //POST
 router.post("/", async (req, res) => {
     try {
-        const { brand, model, year, mileage, userId } = req.body;
+        const { brand, model, year, mileage, image, userId } = req.body;
 
         if (!brand || !model || !year || !mileage || !userId) {
             return res.status(400).json({
@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
             model,
             year,
             mileage,
+            image,
             //rel
             UserId: userId,
         });

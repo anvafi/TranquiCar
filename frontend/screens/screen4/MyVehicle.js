@@ -76,7 +76,7 @@ const MyVehicle = (props) => {
         <View style={styles.contentContainer}>
           {vehicle && (
             <View style={styles.vehicleInfoSection}>
-              <Image source={{ uri: vehicle.foto }} style={styles.vehicleImage} resizeMode="contain" />
+              <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} resizeMode="contain" />
               <Text style={styles.brandText}>{vehicle.brand} {vehicle.model}</Text>
               <Text style={styles.yearText}>{vehicle.year}</Text>
               <View style={styles.kmRow}>

@@ -27,7 +27,7 @@ const Screen2 = (props) => {
       const response = await fetch('http://192.168.1.34:3000/api/users/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
         },
         body: JSON.stringify({
           name: `${name} ${lastName}`,

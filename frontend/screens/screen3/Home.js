@@ -41,9 +41,12 @@ export default function AddVehicle(props) {
 
   useEffect(() => {
 
-    fetchVehicles()
+    const refresh = props.navigation.addListener('focus', () => {   //añadido chapucero para refrescar cada vehiculo añadido... buscar alternativa? un botón de refresco??? pq, (import { useFocusEffect } from '@react-navigation/native'; No se ha dado en asignaturas, creo)
+      fetchVehicles()
+    });
+    return refresh;
 
-  }, []);
+  }, [props.navigation]);
 
   async function fetchVehicles() {
 
@@ -71,7 +74,7 @@ export default function AddVehicle(props) {
         <View style={styles.cardContent}>
           {/* Lado Izquierdo: Imagen y Nombre */}
           <View style={styles.leftColumn}>
-            {/* <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" /> */}
+            <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" />
             <Text style={styles.vehicleTitle}>{item.brand} {item.model}</Text>
             <Text style={[styles.statusText, { color: item.statusColor }]}>{item.status}</Text>
           </View>

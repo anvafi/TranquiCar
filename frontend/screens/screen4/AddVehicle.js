@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,10 +8,16 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  ImageBackground
+  ImageBackground,
+  Alert,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import Context from '../../context/Context';
 
+//libreria de EXPO (buscar alternativas??)
+import * as ImagePicker from 'expo-image-picker';
+
+//traducir
 const AddVehicle = (props) => {
   const [tipo, setTipo] = useState('');
   const [marca, setMarca] = useState('');
@@ -19,36 +25,141 @@ const AddVehicle = (props) => {
   const [anio, setAnio] = useState('');
   const [km, setKm] = useState('');
 
-  const handleAddVehicle = () => {
-    console.log({ tipo, marca, modelo, anio, km });
-    alert('Vehículo añadido con éxito');
-    props.navigation.goBack();
+  const [image, setImage] = useState(null);
+
+  const { user } = useContext(Context);
+
+  const handleAddVehicle = async () => {
+
+    // console.log({ tipo, marca, modelo, anio, km });
+    // alert('Vehículo añadido con éxito');
+    // props.navigation.goBack();
+
+    try {
+      const response = await fetch('http://192.168.1.34:3000/api/vehicles', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
+        },
+        body: JSON.stringify({
+          brand: marca,
+          model: modelo,
+          year: Number(anio),
+          mileage: Number(km),
+          image,
+          userId: user.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        Alert.alert('Error', data.message || 'No se pudo añadir el vehículo');
+        return;
+      }
+
+      Alert.alert('Vehículo guardado', data.message);
+      props.navigation.goBack();
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'No se pudo conectar con el servidor');
+    }
+  };
+  //de cámara
+  // const takePhoto = async () => {
+
+  //   const permission = await ImagePicker.requestCameraPermissionsAsync();   //petición permisos
+
+  //   if (!permission.granted) {
+  //     Alert.alert('Permiso de cámara denegado');
+  //     return;
+  //   }
+
+  //   const result = await ImagePicker.launchCameraAsync({    //abre cámara
+
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+
+  //   });
+
+  //   if (!result.canceled) {
+
+  //     setImage(result.assets[0].uri);   //guarda URI
+
+  //   }
+
+  // };
+
+  const takePhoto = async () => {
+    try {
+      const permission = await ImagePicker.requestCameraPermissionsAsync();
+
+      console.log('Permiso:', permission);
+
+      if (permission.status !== 'granted') {
+        Alert.alert('Permiso de cámara denegado');
+        return;
+      }
+
+      const result = await ImagePicker.launchCameraAsync();
+
+      console.log('Resultado cámara:', result);
+
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+
+    } catch (error) {
+      console.log('Error cámara:', error);
+      Alert.alert('Error', 'No se pudo abrir la cámara');
+    }
+  };
+
+  //de galería
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync();
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false} style={{ flex: 1 }}>
-        
+
         {/* HEADER OSCURO CON LOGO */}
         <View style={styles.headerBackground}>
           <View style={styles.headerTop}>
             <Pressable onPress={() => props.navigation.goBack()}>
               <MaterialIcons name="arrow-back" size={28} color="white" />
             </Pressable>
-            <Image 
+            <Image
               source={require('../../assets/Image.png')}
               style={styles.logo}
               resizeMode="contain"
             />
-            <View style={{ width: 28 }} /> 
+            <View style={{ width: 28 }} />
           </View>
           <Text style={styles.headerTitle}>Add Vehicle</Text>
         </View>
 
         <View style={styles.formContainer}>
-          
-          <Pressable style={styles.photoPlaceholder} onPress={() => alert('Abrir Cámara')}>
-            <MaterialIcons name="add" size={40} color="#333" />
+          {/* cambiar placeholder */}
+          <Pressable style={styles.photoPlaceholder} onPress={takePhoto}>
+            {
+              image ? (
+                <Image
+                  source={{ uri: image }}
+                  style={styles.previewImage}
+                />
+              ) : (
+                <MaterialIcons name="add" size={40} color="#333" />
+              )
+            }
             <Text style={styles.addPhotoText}>Add photo</Text>
           </Pressable>
 
@@ -183,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   addButton: {
-    backgroundColor: '#8B1A1A', 
+    backgroundColor: '#8B1A1A',
     height: 60,
     borderRadius: 15,
     justifyContent: 'center',
@@ -195,12 +306,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
-  
+
   addButtonText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
   },
+
+  //foto
+  previewImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15,
+  },
+
 });
 
 export default AddVehicle;

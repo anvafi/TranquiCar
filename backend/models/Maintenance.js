@@ -1,33 +1,34 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+const sequelize = require("../config/database");
 
-const Vehicle = sequelize.define("Vehicle", {
+const Maintenance = sequelize.define("Maintenance", {
 
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    brand: {
+
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    model: {
+
+    description: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    year: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
+
     mileage: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    image: {
-        type: DataTypes.STRING,
-        allowNull: true,
+
+    date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
     },
+
 });
 
-module.exports = Vehicle;
+module.exports = Maintenance;
