@@ -3,6 +3,11 @@ require("dotenv").config();
 const app = require("./App");
 const sequelize = require("./config/db");
 const User = require("./models/User");
+const Vehicle = require("./models/Vehicle");
+
+//relaciones sequelize
+User.hasMany(Vehicle);
+Vehicle.belongsTo(User);
 
 const PORT = process.env.PORT || 3000;
 

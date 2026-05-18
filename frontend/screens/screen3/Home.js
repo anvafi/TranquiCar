@@ -1,40 +1,69 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, SafeAreaView, Pressable } from 'react-native';
 import Context from '../../context/Context';
 
 export default function AddVehicle(props) {
 
   const { user } = useContext(Context);
+  const [vehicles, setVehicles] = useState([]);
 
-  const [vehicles, setVehicles] = useState([
-    {
-      id: 1,
-      brand: 'Volkswagen',
-      model: 'T-prime',
-      year: '2002 año',
-      mileage: '100 Km',
-      transmission: 'Manual & Auto',
-      image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
-    },
-    {
-      id: 2,
-      brand: 'Hyundai',
-      model: 'Tucson',
-      year: '2014 año',
-      mileage: '23 Km',
-      transmission: 'Manual & Auto',
-      image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
-    },
-    {
-      id: 3,
-      brand: 'Kawasaki',
-      model: 'Ninja H2R',
-      year: '2020 año',
-      mileage: '33 Km',
-      transmission: '',
-      image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
+  //fech cambio hardcodeados
+
+  // const [vehicles, setVehicles] = useState([
+  //   {
+  //     id: 1,
+  //     brand: 'Volkswagen',
+  //     model: 'T-prime',
+  //     year: '2002 año',
+  //     mileage: '100 Km',
+  //     transmission: 'Manual & Auto',
+  //     image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
+  //   },
+  //   {
+  //     id: 2,
+  //     brand: 'Hyundai',
+  //     model: 'Tucson',
+  //     year: '2014 año',
+  //     mileage: '23 Km',
+  //     transmission: 'Manual & Auto',
+  //     image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
+  //   },
+  //   {
+  //     id: 3,
+  //     brand: 'Kawasaki',
+  //     model: 'Ninja H2R',
+  //     year: '2020 año',
+  //     mileage: '33 Km',
+  //     transmission: '',
+  //     image: 'https://a.ccdn.es/cnet/contents/media/volkswagen/1144935.jpg/900x505cut/',
+  //   }
+  // ]);
+
+  useEffect(() => {
+
+    fetchVehicles()
+
+  }, []);
+
+  async function fetchVehicles() {
+
+    try {
+
+      const response = await fetch(
+        `http://192.168.1.34:3000/api/vehicles/user/${user.id}`
+      );
+
+      const data = await response.json();
+
+      setVehicles(data);
+
+    } catch (error) {
+
+      console.log(error);
+
     }
-  ]);
+
+  }
 
   const VehicleList = () => {
     return vehicles.map((item, index) => (
@@ -42,7 +71,7 @@ export default function AddVehicle(props) {
         <View style={styles.cardContent}>
           {/* Lado Izquierdo: Imagen y Nombre */}
           <View style={styles.leftColumn}>
-            <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" />
+            {/* <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" /> */}
             <Text style={styles.vehicleTitle}>{item.brand} {item.model}</Text>
             <Text style={[styles.statusText, { color: item.statusColor }]}>{item.status}</Text>
           </View>
@@ -51,8 +80,10 @@ export default function AddVehicle(props) {
           <View style={styles.rightColumn}>
             <Text style={styles.infoText}>{item.year}</Text>
             <Text style={styles.infoText}>{item.mileage}</Text>
-            <Text style={styles.infoText}>{item.transmission}</Text>
-            <Pressable onPress={() => props.navigation.navigate('MyVehicle')}>
+            {/* <Text style={styles.infoText}>{item.transmission}</Text> */}
+            <Pressable onPress={() => props.navigation.navigate('MyVehicle', {
+              vehicleId: item.id
+            })}>
               <Text style={styles.arrowIcon}>{'>'}</Text>
             </Pressable>
           </View>

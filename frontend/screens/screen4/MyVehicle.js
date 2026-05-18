@@ -14,55 +14,73 @@ import { MaterialIcons } from '@expo/vector-icons';
 const MyVehicle = (props) => {
   const [vehicle, setVehicle] = useState(null);
   const [maintenance, setMaintenance] = useState([]);
+  const { vehicleId } = props.route.params;
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
+    //fech cambio hardcodeados
+    try {
 
-    setVehicle({
-      foto: 'https://soymotor.com/sites/default/files/imagenes/noticia/volkswagen-touareg-2017-t-prime-concept-28.jpg', 
-      marca: 'Volkswagen',
-      modelo: 'T-prime',
-      anio: '2017',
-      kmActuales: '45.230'
-    });
+      const response = await fetch(
+        `http://192.168.1.34:3000/api/vehicles/${vehicleId}`
+      );
 
-    setMaintenance([
-      { id: 1, titulo: 'Aceite', detalle: '15.000 Km o 12 meses', estado: 'En 9.800 Km', color: '#2ecc71' },
-      { id: 2, titulo: 'Filtros', detalle: '30.000 Km', estado: 'En 14.770 Km', color: '#f1c40f' }
-    ]);
+      const data = await response.json();
+
+      setVehicle(data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+    // setVehicle({
+    //   foto: 'https://soymotor.com/sites/default/files/imagenes/noticia/volkswagen-touareg-2017-t-prime-concept-28.jpg',
+    //   marca: 'Volkswagen',
+    //   modelo: 'T-prime',
+    //   anio: '2017',
+    //   kmActuales: '45.230'
+    // });
+
+    // setMaintenance([
+    //   { id: 1, titulo: 'Aceite', detalle: '15.000 Km o 12 meses', estado: 'En 9.800 Km', color: '#2ecc71' },
+    //   { id: 2, titulo: 'Filtros', detalle: '30.000 Km', estado: 'En 14.770 Km', color: '#f1c40f' }
+    // ]);
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false} style={{ flex: 1 }}>
-        
+
         <View style={styles.headerBackground}>
           <View style={styles.headerTop}>
             <Pressable onPress={() => props.navigation.goBack()}>
               <MaterialIcons name="arrow-back" size={28} color="white" />
             </Pressable>
-            <Image 
+            <Image
               source={require('../../assets/Image.png')}
               style={styles.logo}
               resizeMode="contain"
             />
-            <View style={{ width: 28 }} /> 
+            <View style={{ width: 28 }} />
           </View>
-          <Text style={styles.headerTitle}>Add Vehicle</Text>
+          <Text style={styles.headerTitle}>My Vehicle-GETservidor Details</Text>
         </View>
 
         {/* INFO DEL VEHÍCULO */}
+        {/* cambiado campos de vhicle a inglés como backend (foto pendiente) */}
         <View style={styles.contentContainer}>
           {vehicle && (
             <View style={styles.vehicleInfoSection}>
               <Image source={{ uri: vehicle.foto }} style={styles.vehicleImage} resizeMode="contain" />
-              <Text style={styles.brandText}>{vehicle.marca} {vehicle.modelo}</Text>
-              <Text style={styles.yearText}>{vehicle.anio}</Text>
+              <Text style={styles.brandText}>{vehicle.brand} {vehicle.model}</Text>
+              <Text style={styles.yearText}>{vehicle.year}</Text>
               <View style={styles.kmRow}>
-                <Text style={styles.kmText}>{vehicle.kmActuales} Km</Text>
+                <Text style={styles.kmText}>{vehicle.mileage} Km</Text>
                 <View style={styles.statusBadge}>
                   <MaterialIcons name="check" size={16} color="#2ecc71" />
                   <Text style={styles.statusText}>Al día</Text>
@@ -116,57 +134,57 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  logo: { 
-    width: 120, 
-    height: 120, 
-    },
-  headerTitle: { 
-    color: 'white', 
-    fontSize: 34, 
-    fontWeight: 'bold' 
-    },
-  contentContainer: { 
-    padding: 20 
-    },
-  vehicleImage: { 
-    width: '100%', 
-    height: 200, 
-    marginBottom: 15 
-    },
-  brandText: { 
-    fontSize: 22, 
-    fontWeight: 'bold', 
-    color: '#000' 
-    },
-  yearText: { 
-    fontSize: 16, 
-    color: '#666' 
-    },
-  kmRow: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    marginTop: 5 
-    },
-  kmText: { 
-    fontSize: 20, 
-    fontWeight: 'bold' 
-    },
-  statusBadge: { 
-    flexDirection: 'row', 
-    alignItems: 'center' 
-    },
-  statusText: { 
-    color: '#2ecc71', 
-    fontWeight: 'bold', 
-    marginLeft: 5 
-    },
-  sectionTitle: { 
-    fontSize: 18, 
-    fontWeight: 'bold', 
-    marginTop: 30, 
-    marginBottom: 15 
-    },
+  logo: {
+    width: 120,
+    height: 120,
+  },
+  headerTitle: {
+    color: 'white',
+    fontSize: 34,
+    fontWeight: 'bold'
+  },
+  contentContainer: {
+    padding: 20
+  },
+  vehicleImage: {
+    width: '100%',
+    height: 200,
+    marginBottom: 15
+  },
+  brandText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000'
+  },
+  yearText: {
+    fontSize: 16,
+    color: '#666'
+  },
+  kmRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 5
+  },
+  kmText: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  statusBadge: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  statusText: {
+    color: '#2ecc71',
+    fontWeight: 'bold',
+    marginLeft: 5
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 30,
+    marginBottom: 15
+  },
   maintenanceCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -178,17 +196,17 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     marginBottom: 12,
   },
-  cardTitle: { 
-    fontSize: 18, 
-    fontWeight: 'bold' 
-    },
-  cardSubtitle: { 
-    color: '#888', 
-    marginTop: 2 
-    },
-  cardStatus: { 
-    fontWeight: 'bold' 
-    },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  cardSubtitle: {
+    color: '#888',
+    marginTop: 2
+  },
+  cardStatus: {
+    fontWeight: 'bold'
+  },
   actionButton: {
     backgroundColor: '#8B1A1A',
     height: 55,
@@ -197,11 +215,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  actionButtonText: { 
-    color: 'white', 
-    fontSize: 18, 
-    fontWeight: 'bold' 
-    },
+  actionButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
 });
 
 export default MyVehicle;
