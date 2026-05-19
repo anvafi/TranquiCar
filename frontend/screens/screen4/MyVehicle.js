@@ -24,13 +24,21 @@ const MyVehicle = (props) => {
     //fech cambio hardcodeados
     try {
 
-      const response = await fetch(
+      const vehicleResponse = await fetch(
         `http://192.168.1.34:3000/api/vehicles/${vehicleId}`
       );
 
-      const data = await response.json();
+      const vehicleData = await vehicleResponse.json();
 
-      setVehicle(data);
+      setVehicle(vehicleData);
+
+      const maintenanceResponse = await fetch(
+        `http://192.168.1.34:3000/api/maintenance/vehicle/${vehicleId}`
+      );
+
+      const maintenanceData = await maintenanceResponse.json();
+
+      setMaintenance(maintenanceData);
 
     } catch (error) {
 
@@ -92,13 +100,32 @@ const MyVehicle = (props) => {
           <Text style={styles.sectionTitle}>Upcoming Maintenance</Text>
 
           {/* LISTA DE TARJETAS (REMINDERS / MAINTENANCE) */}
-          {maintenance.map((item) => (
+          {/* TARJETA (REMINDERS) */}
+          {/* {maintenance.map((item) => (
             <View key={item.id} style={styles.maintenanceCard}>
               <View>
                 <Text style={styles.cardTitle}>{item.titulo}</Text>
                 <Text style={styles.cardSubtitle}>{item.detalle}</Text>
               </View>
               <Text style={[styles.cardStatus, { color: item.color }]}>{item.estado}</Text>
+            </View>
+          ))} */}
+          {/* TARJETA (MAINTENANCE) */}
+          {maintenance.map((item) => (
+            <View key={item.id} style={styles.maintenanceCard}>
+              <View>
+                <Text style={styles.cardTitle}>{item.maintenanceType}</Text>
+                <Text style={styles.cardSubtitle}>
+                  {item.date} - {item.kilometers} km
+                </Text>
+                {item.notes ? (
+                  <Text style={styles.cardSubtitle}>{item.notes}</Text>
+                ) : null}
+              </View>
+
+              <Text style={styles.cardStatus}>
+                {item.cost ? `${item.cost}€` : ''}
+              </Text>
             </View>
           ))}
 

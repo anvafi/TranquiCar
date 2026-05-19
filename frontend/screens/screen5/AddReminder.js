@@ -1,95 +1,188 @@
+// screens/screen6/AddReminder.js
+
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Pressable,
-  Image,
-  ScrollView,
-  SafeAreaView
-} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Image, ScrollView, SafeAreaView, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const AddReminder = (props) => {
-  const [titulo, setTitulo] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [descripcion, setDescripcion] = useState('');
 
-  const handleSaveReminder = () => {
-    alert('Recordatorio guardado');
-    // Aquí iría la lógica para guardar en la base de datos
+const AddReminder = (props) => {
+
+  const [oilEnabled, setOilEnabled] = useState(true);
+  const [filtersEnabled, setFiltersEnabled] = useState(true);
+  const [tiresEnabled, setTiresEnabled] = useState(true);
+
+  const [oilKm, setOilKm] = useState('');
+  const [oilMonths, setOilMonths] = useState('');
+
+  const [filtersKm, setFiltersKm] = useState('');
+  const [filtersMonths, setFiltersMonths] = useState('');
+
+  const [tiresKm, setTiresKm] = useState('');
+  const [tiresMonths, setTiresMonths] = useState('');
+
+  const handleAddReminder = () => {
+
+    const remindersData = {
+      oil: {
+        enabled: oilEnabled,
+        km: oilKm,
+        months: oilMonths,
+      },
+
+      filters: {
+        enabled: filtersEnabled,
+        km: filtersKm,
+        months: filtersMonths,
+      },
+
+      tires: {
+        enabled: tiresEnabled,
+        km: tiresKm,
+        months: tiresMonths,
+      },
+    };
+
+    console.log(remindersData);
+
+    alert('Recordatorios añadidos');
+
+    props.navigation.goBack();
   };
+
+  const ReminderBlock = ({
+    title,
+    enabled,
+    setEnabled,
+    km,
+    setKm,
+    months,
+    setMonths,
+  }) => (
+    <View style={styles.reminderBlock}>
+
+      <View style={styles.titleRow}>
+        <Text style={styles.reminderTitle}>{title}</Text>
+
+        <Switch
+          trackColor={{ false: '#767577', true: '#6C4AB6' }}
+          thumbColor={'#FFFFFF'}
+          ios_backgroundColor="#767577"
+          onValueChange={setEnabled}
+          value={enabled}
+        />
+      </View>
+
+      <Text style={styles.label}>Avisar cada:</Text>
+
+      <View style={styles.inputsRow}>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.smallInput}
+            keyboardType="numeric"
+            value={km}
+            onChangeText={setKm}
+          />
+
+          <Text style={styles.inputText}>Km</Text>
+        </View>
+
+        <Text style={styles.separator}>|</Text>
+
+        <Text style={styles.middleText}>o cada</Text>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.smallInput}
+            keyboardType="numeric"
+            value={months}
+            onChangeText={setMonths}
+          />
+
+          <Text style={styles.inputText}>meses</Text>
+        </View>
+
+      </View>
+
+      <View style={styles.divider} />
+
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false}>
-        
-        {/* HEADER OSCURO */}
+
+        {/* HEADER CON LOGO */}
         <View style={styles.headerBackground}>
           <View style={styles.headerTop}>
             <Pressable onPress={() => props.navigation.goBack()}>
-              <Text> "close" </Text>
+              <MaterialIcons name="arrow-back" size={28} color="white" />
             </Pressable>
-            <Image 
-              source={require('../../assets/Image.png')} 
+            <Image
+              source={require('../../assets/Image.png')}
               style={styles.logo}
               resizeMode="contain"
             />
             <View style={{ width: 28 }} />
           </View>
-          <Text style={styles.headerTitle}>Reminder</Text>
+          <Text style={styles.headerTitle}>Add Reminder</Text>
         </View>
 
-        {/* CONTENIDO */}
-        <View style={styles.formContainer}>
-          
-          <View style={styles.infoBox}>
-            <MaterialIcons name="notifications-active" size={24} color="#8B1A1A" />
-            <Text style={styles.infoText}>Configura tus alertas de mantenimiento.</Text>
-          </View>
+        <View style={styles.contenido}>
 
-          <Text style={styles.label}>Título del recordatorio</Text>
-          <TextInput
-            style={styles.inputFull}
-            placeholder="Ej. Cambio de Aceite"
-            value={titulo}
-            onChangeText={setTitulo}
+          <ReminderBlock
+            title="Aceite"
+            enabled={oilEnabled}
+            setEnabled={setOilEnabled}
+            km={oilKm}
+            setKm={setOilKm}
+            months={oilMonths}
+            setMonths={setOilMonths}
           />
 
-          <Text style={styles.label}>Fecha / Kilometraje</Text>
-          <TextInput
-            style={styles.inputFull}
-            placeholder="Ej. 15/10/2026 o 50.000 km"
-            value={fecha}
-            onChangeText={setFecha}
+          <ReminderBlock
+            title="Filtros"
+            enabled={filtersEnabled}
+            setEnabled={setFiltersEnabled}
+            km={filtersKm}
+            setKm={setFiltersKm}
+            months={filtersMonths}
+            setMonths={setFiltersMonths}
           />
 
-          <Text style={styles.label}>Descripción (Opcional)</Text>
-          <TextInput
-            style={[styles.inputFull, styles.textArea]}
-            placeholder="Detalles adicionales..."
-            multiline
-            numberOfLines={4}
-            value={descripcion}
-            onChangeText={setDescripcion}
+          <ReminderBlock
+            title="Neumáticos"
+            enabled={tiresEnabled}
+            setEnabled={setTiresEnabled}
+            km={tiresKm}
+            setKm={setTiresKm}
+            months={tiresMonths}
+            setMonths={setTiresMonths}
           />
 
-          <Pressable style={styles.saveButton} onPress={handleSaveReminder}>
-            <Text style={styles.saveButtonText}>Guardar Recordatorio</Text>
+          {/* BOTÓN */}
+          <Pressable
+            style={styles.addButton}
+            onPress={handleAddReminder}
+          >
+            <Text style={styles.addButtonText}>Add</Text>
           </Pressable>
 
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+
   mainContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
   },
+
   headerBackground: {
     backgroundColor: '#1a1a1a',
     paddingHorizontal: 20,
@@ -111,19 +204,109 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: 'bold',
   },
-  formContainer: {
-    padding: 25,
+
+  contenido: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
   },
-  infoBox: {
+
+  reminderBlock: {
+    marginBottom: 15,
+  },
+
+  titleRow: {
     flexDirection: 'row',
-    backgroundColor: '#FFF5F5',
-    padding: 15,
-    borderRadius: 12,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 25,
+  },
+
+  reminderTitle: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    color: '#222',
+    marginBottom: 20,
+  },
+
+  label: {
+    fontSize: 18,
+    color: '#7A7A7A',
+    marginBottom: 15,
+    fontWeight: '600',
+  },
+
+  inputsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  smallInput: {
+    width: 80,
+    height: 50,
     borderWidth: 1,
-    borderColor: '#FFE0E0',
+    borderColor: '#BDBDBD',
+    borderRadius: 8,
+    backgroundColor: '#FFF',
+    textAlign: 'center',
+    fontSize: 18,
+  },
+
+  inputText: {
+    marginLeft: 8,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#444',
+  },
+
+  separator: {
+    marginHorizontal: 12,
+    fontSize: 22,
+    color: '#999',
+  },
+
+  middleText: {
+    fontSize: 18,
+    color: '#7A7A7A',
+    marginRight: 12,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: '#DDD',
+    marginTop: 25,
+  },
+
+  addButton: {
+    backgroundColor: '#8B0000',
+    height: 60,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
+
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
+  addButtonText: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+
 });
 
 export default AddReminder;

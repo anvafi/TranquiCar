@@ -7,12 +7,12 @@ import { Provider } from './context/Context';
 import Screen1 from './screens/screen1/Login';
 import Screen2 from './screens/screen2/Register';
 import Home from './screens/screen3/Home';
-// import Reminder from './screens/screen5/Reminder';
-// import Maintenance from './screens/screen6/Maintenance';
+import Reminder from './screens/screen5/Reminder';
+import Maintenance from './screens/screen6/Maintenance';
 import Vehicle from './screens/screen4/AddVehicle';
 import MyVehicle from './screens/screen4/MyVehicle';
-// import AddReminder from './screens/screen5/AddReminder';
-// import AddMaintenance from './screens/screen6/AddMaintenance';
+import AddReminder from './screens/screen5/AddReminder';
+import AddMaintenance from './screens/screen6/AddMaintenance';
 
 
 const Stack = createStackNavigator();
@@ -21,8 +21,8 @@ const Tab = createBottomTabNavigator();
 const MenuLateral = () => (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={Home} />
-        {/* <Tab.Screen name="Reminder" component={Reminder} /> */}
-        {/* <Tab.Screen name="Maintenance" component={Maintenance} /> */}
+        <Tab.Screen name="Reminder" component={Reminder} />
+        <Tab.Screen name="Maintenance" component={Maintenance} />
     </Tab.Navigator>
 );
 
@@ -36,10 +36,10 @@ export default function App() {
                     <Stack.Screen name="Home" component={MenuLateral} />
                     <Stack.Screen name="AddVehicle" component={Vehicle} />
                     <Stack.Screen name="MyVehicle" component={MyVehicle} />
-                    {/* <Stack.Screen name="AddReminder" component={AddReminder} /> */}
-                    {/* <Stack.Screen name="Reminder" component={Reminder} />
+                    <Stack.Screen name="AddReminder" component={AddReminder} />
+                    <Stack.Screen name="Reminder" component={Reminder} />
                     <Stack.Screen name="AddMaintenance" component={AddMaintenance} />
-                    <Stack.Screen name="Maintenance" component={Maintenance} /> */}
+                    <Stack.Screen name="Maintenance" component={Maintenance} />
                 </Stack.Navigator>
             </NavigationContainer>
 

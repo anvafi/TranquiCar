@@ -80,7 +80,7 @@ const AddVehicle = (props) => {
 
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 3],                                       //jugar con el ratio
       quality: 1,
 
     });

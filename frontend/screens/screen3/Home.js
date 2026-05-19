@@ -70,7 +70,15 @@ export default function AddVehicle(props) {
 
   const VehicleList = () => {
     return vehicles.map((item, index) => (
-      <View key={item.id} style={styles.card}>
+      // <View key={item.id} style={styles.card}>
+      // [TEMPORAL?] He hecho toda la tarjeta Pressable
+      <Pressable
+        key={item.id}
+        style={styles.card}
+        onPress={() => props.navigation.navigate('MyVehicle', {
+          vehicleId: item.id
+        })}
+      >
         <View style={styles.cardContent}>
           {/* Lado Izquierdo: Imagen y Nombre */}
           <View style={styles.leftColumn}>
@@ -91,7 +99,8 @@ export default function AddVehicle(props) {
             </Pressable>
           </View>
         </View>
-      </View>
+      </Pressable>
+      // </View>
     ));
   };
 

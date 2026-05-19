@@ -1,13 +1,18 @@
 require("dotenv").config();
 
 const app = require("./App");
-const sequelize = require("./config/db");
+const sequelize = require("./config/database");
+
 const User = require("./models/User");
 const Vehicle = require("./models/Vehicle");
+const Maintenance = require("./models/Maintenance");
 
 //relaciones sequelize
 User.hasMany(Vehicle);
 Vehicle.belongsTo(User);
+Vehicle.hasMany(Maintenance);
+Maintenance.belongsTo(Vehicle);
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,7 +24,7 @@ const startServer = async () => {
 
     console.log("Conectado a bd");
 
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
 
     console.log("sync de tablas");
 
