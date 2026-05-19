@@ -8,6 +8,7 @@ import {
     Image,
     ScrollView,
     SafeAreaView,
+    Alert,
 } from 'react-native';
 
 import { Picker } from '@react-native-picker/picker';
@@ -24,20 +25,44 @@ const AddMaintenance = (props) => {
     const [cost, setCost] = useState('');
     const [notes, setNotes] = useState('');
 
-    const handleAddMaintenance = () => {
-        const maintenanceData = {
-            maintenanceType,
-            date: `${day}/${month}/${year}`,
-            kilometers,
-            cost,
-            notes,
-        };
+    const { vehicleId } = props.route.params;
 
-        console.log(maintenanceData);
+    const handleAddMaintenance = async () => {
+        // const maintenanceData = {
+        //     maintenanceType,
+        //     date: `${day}/${month}/${year}`,
+        //     kilometers,
+        //     cost,
+        //     notes,
+        // };
+        try {
 
-        alert('Mantenimiento añadido correctamente');
+            const response = await fetch('http://192.168.1.34:3000/api/maintenance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    maintenanceType,
+                    date: `${year}-${month}-${day}`,
+                    kilometers: Number(kilometers),
+                    cost: cost ? Number(cost) : null,
+                    notes,
+                    vehicleId,
+                }),
+            });
 
-        props.navigation.goBack();
+            // console.log(maintenanceData);
+            const data = await response.json();
+
+            Alert.alert('Mantenimiento añadido correctamente');
+
+            props.navigation.goBack();
+
+        } catch (error) {
+            console.log(error);
+            Alert.alert('Error', 'No se pudo conectar con el servidor');
+        }
     };
 
     return (

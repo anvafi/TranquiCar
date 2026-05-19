@@ -17,8 +17,12 @@ const MyVehicle = (props) => {
   const { vehicleId } = props.route.params;
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const refresh = props.navigation.addListener('focus', () => {
+      loadData();
+    });
+
+    return refresh;
+  }, [props.navigation]);
 
   const loadData = async () => {
     //fech cambio hardcodeados
@@ -130,7 +134,9 @@ const MyVehicle = (props) => {
           ))}
 
           {/* BOTONES DE ACCIÓN */}
-          <Pressable style={styles.actionButton} onPress={() => props.navigation.navigate('AddMaintenance')}>
+          <Pressable style={styles.actionButton} onPress={() => props.navigation.navigate('AddMaintenance', {
+            vehicleId: vehicleId
+          })}>
             <Text style={styles.actionButtonText}>+ Maintenance</Text>
           </Pressable>
 
