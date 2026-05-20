@@ -1,5 +1,6 @@
 const express = require("express");
 const Reminder = require("../models/Reminder");
+const Vehicle = require("../models/Vehicle");
 
 const router = express.Router();
 
@@ -71,4 +72,109 @@ router.get("/vehicle/:vehicleId", async (req, res) => {
     }
 });
 
+// GET record x Id
+
+router.get("/user/:userId", async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const reminders = await Reminder.findAll({
+            include: [
+                {
+                    model: Vehicle,
+                    where: {
+                        UserId: userId,
+                    },
+                },
+            ],
+            order: [["createdAt", "DESC"]],
+        });
+
+        res.status(200).json(reminders);
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error obteniendo recordatorios del usuario",
+        });
+    }
+});
+
+// ALTER record
+
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const {
+            maintenanceType,
+            reminderType,
+            kilometersInterval,
+            monthsInterval,
+            nextReminderKm,
+            nextReminderDate,
+            isCompleted,
+        } = req.body;
+
+        const reminder = await Reminder.findByPk(id);
+
+        if (!reminder) {
+            return res.status(404).json({
+                message: "Recordatorio no encontrado",
+            });
+        }
+
+        await reminder.update({
+            maintenanceType,
+            reminderType,
+            kilometersInterval,
+            monthsInterval,
+            nextReminderKm,
+            nextReminderDate,
+            isCompleted,
+        });
+
+        res.status(200).json({
+            message: "Recordatorio actualizado correctamente",
+            reminder,
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error actualizando recordatorio",
+        });
+    }
+});
+
+//DELETE record
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const reminder = await Reminder.findByPk(id);
+
+        if (!reminder) {
+            return res.status(404).json({
+                message: "Recordatorio no encontrado",
+            });
+        }
+
+        await reminder.destroy();
+
+        res.status(200).json({
+            message: "Recordatorio eliminado correctamente",
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error eliminando recordatorio",
+        });
+    }
+});
 module.exports = router;

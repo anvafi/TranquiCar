@@ -13,9 +13,9 @@ import Vehicle from './screens/screen4/AddVehicle';
 import MyVehicle from './screens/screen4/MyVehicle';
 import AddReminder from './screens/screen5/AddReminder';
 import AddMaintenance from './screens/screen6/AddMaintenance';
-// import ForgotPassword from './screens/screen2/ForgotPass';
-// import EditReminder from './screens/screen5/EditReminder';
+import EditReminder from './screens/screen5/EditReminder';
 import EditMaintenance from './screens/screen6/EditMaintenance';
+// import ForgotPassword from './screens/screen2/ForgotPass';
 
 
 const Stack = createStackNavigator();
@@ -44,8 +44,9 @@ export default function App() {
                     <Stack.Screen name="AddMaintenance" component={AddMaintenance} />
                     <Stack.Screen name="Maintenance" component={Maintenance} />
                     <Stack.Screen name="EditMaintenance" component={EditMaintenance} />
-                    {/* <Stack.Screen name="Forgot Password" component={ForgotPassword} />
-                    <Stack.Screen name="EditReminder" component={EditReminder} /> */}
+                    <Stack.Screen name="EditReminder" component={EditReminder} />
+                    {/* <Stack.Screen name="Forgot Password" component={ForgotPassword} /> */}
+
                 </Stack.Navigator>
             </NavigationContainer>
 
