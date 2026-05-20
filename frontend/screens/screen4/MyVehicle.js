@@ -90,6 +90,14 @@ const MyVehicle = (props) => {
     // ]);
   };
 
+  const hasCriticalReminder = reminders.some((item) => {
+
+    const remainingKm =
+      item.nextReminderKm - vehicle.mileage;
+
+    return remainingKm < 2000;
+  });
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false} style={{ flex: 1 }}>
@@ -106,7 +114,7 @@ const MyVehicle = (props) => {
             />
             <View style={{ width: 28 }} />
           </View>
-          <Text style={styles.headerTitle}>My Vehicle-GETservidor Details</Text>
+          <Text style={styles.headerTitle}>My Vehicle Details</Text>
         </View>
 
         {/* INFO DEL VEHÍCULO */}
@@ -117,11 +125,25 @@ const MyVehicle = (props) => {
               <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} resizeMode="contain" />
               <Text style={styles.brandText}>{vehicle.brand} {vehicle.model}</Text>
               <Text style={styles.yearText}>{vehicle.year}</Text>
+
               <View style={styles.kmRow}>
                 <Text style={styles.kmText}>{vehicle.mileage} Km</Text>
                 <View style={styles.statusBadge}>
-                  <MaterialIcons name="check" size={16} color="#2ecc71" />
-                  <Text style={styles.statusText}>Al día</Text>
+                  <MaterialIcons
+                    name={hasCriticalReminder ? 'warning' : 'check'}
+                    size={16}
+                    color={hasCriticalReminder ? '#e74c3c' : '#2ecc71'}
+                  />
+                  <Text
+                    style={[styles.statusText, {
+                      color: hasCriticalReminder
+                        ? '#e74c3c'
+                        : '#2ecc71'
+                    }
+                    ]}>
+                    {hasCriticalReminder ? 'Revisar' : 'Al día'}
+                  </Text>
+                  {/* <Text style={styles.statusText}>Al día</Text> */}
                 </View>
               </View>
             </View>
@@ -143,6 +165,16 @@ const MyVehicle = (props) => {
           {reminders.map((item) => {
             const remainingKm =
               item.nextReminderKm - vehicle.mileage;
+
+            let statusColor = '#2ecc71';
+
+            if (remainingKm < 2000) {
+              statusColor = '#f1c40f';
+            }
+
+            if (remainingKm < 1000) {
+              statusColor = '#e74c3c';
+            }
             return (
               <View key={item.id} style={styles.maintenanceCard}>
 
@@ -164,7 +196,7 @@ const MyVehicle = (props) => {
                   ) : null}
                 </View>
 
-                <Text style={styles.cardStatus}>
+                <Text style={styles.cardStatus, { color: statusColor }}>
                   En {remainingKm.toLocaleString()} Km
                 </Text>
 
