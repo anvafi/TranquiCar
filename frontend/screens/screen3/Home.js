@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, SafeAreaView, Pressable } from 'react-native';
 import Context from '../../context/Context';
+import { API_URL } from '../../config/api';
 
 export default function AddVehicle(props) {
 
@@ -53,7 +54,7 @@ export default function AddVehicle(props) {
     try {
 
       const response = await fetch(
-        `http://192.168.1.34:3000/api/vehicles/user/${user.id}`
+        `${API_URL}/api/vehicles/user/${user.id}`
       );
 
       const data = await response.json();

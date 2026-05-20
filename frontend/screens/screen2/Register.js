@@ -25,7 +25,7 @@ const Screen2 = (props) => {
 
   async function handleRegister() {
     try {
-      const response = await fetch('${API_URL}/api/users/register', {
+      const response = await fetch(`${API_URL}/api/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Context from '../../context/Context';
 import { Ionicons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const Maintenance = (props) => {
 
@@ -19,7 +20,7 @@ const Maintenance = (props) => {
     const loadMaintenances = async () => {
         try {
             const response = await fetch(
-                `http://192.168.1.34:3000/api/maintenance/user/${user.id}`
+                `${API_URL}/api/maintenance/user/${user.id}`
             );
 
             const data = await response.json();

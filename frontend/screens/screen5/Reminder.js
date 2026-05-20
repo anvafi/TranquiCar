@@ -11,10 +11,8 @@ import {
     Image,
 } from 'react-native';
 import Context from '../../context/Context';
-
 import { Ionicons } from '@expo/vector-icons';
-
-
+import { API_URL } from '../../config/api';
 
 
 const Reminders = (props) => {
@@ -78,7 +76,7 @@ const Reminders = (props) => {
     const loadReminders = async () => {
         try {
             const response = await fetch(
-                `http://192.168.1.34:3000/api/reminders/user/${user.id}`
+                `${API_URL}/api/reminders/user/${user.id}`
             );
 
             const data = await response.json();

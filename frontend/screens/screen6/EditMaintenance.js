@@ -107,7 +107,7 @@ const EditMaintenance = (props) => {
   const handleDeleteMaintenance = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:3000/api/maintenance/${maintenance.id}`,
+        `${API_URL}/api/maintenance/${maintenance.id}`,
         {
           method: 'DELETE',
         }

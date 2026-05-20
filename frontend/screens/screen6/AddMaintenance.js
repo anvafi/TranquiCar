@@ -41,7 +41,7 @@ const AddMaintenance = (props) => {
         // };
         try {
 
-            const response = await fetch('${API_URL}/api/maintenance', {
+            const response = await fetch(`${API_URL}/api/maintenance`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

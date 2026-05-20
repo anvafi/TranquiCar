@@ -123,7 +123,7 @@ const EditReminder = (props) => {
           onPress: async () => {
             try {
               const response = await fetch(
-                `http://192.168.1.34:3000/api/reminders/${reminder.id}`,
+                `${API_URL}/api/reminders/${reminder.id}`,
                 {
                   method: 'DELETE',
                 }

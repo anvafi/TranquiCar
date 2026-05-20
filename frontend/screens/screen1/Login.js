@@ -20,7 +20,7 @@ const Screen1 = (props) => {
 
   async function handleLogin() {
     try {
-      const response = await fetch('${API_URL}/api/users/login', {
+      const response = await fetch(`${API_URL}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON

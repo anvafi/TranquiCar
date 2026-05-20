@@ -1,2 +1,1 @@
-export const API_URL =
-    'https://tranquicar-api.onrender.com';
+export const API_URL = 'https://tranquicar-api.onrender.com';

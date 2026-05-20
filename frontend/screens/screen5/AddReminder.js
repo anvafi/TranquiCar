@@ -183,7 +183,7 @@ const AddReminder = (props) => {
       }
 
       for (const reminder of remindersToCreate) {
-        const response = await fetch('${API_URL}/api/reminders', {
+        const response = await fetch(`${API_URL}/api/reminders`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
