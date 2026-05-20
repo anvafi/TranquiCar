@@ -6,7 +6,8 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  Pressable
+  Pressable,
+  Alert
 } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -48,6 +49,31 @@ const MyVehicle = (props) => {
 
       console.log(error);
 
+    }
+  };
+  const deleteMaintenance = async (maintenanceId) => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.34:3000/api/maintenance/${maintenanceId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        Alert.alert('No se pudo eliminar', data.message);
+        return;
+      }
+
+      Alert.alert('Eliminado', data.message);
+
+      loadData();
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert('No se pudo conectar con el servidor');
     }
 
     // setVehicle({
@@ -130,6 +156,10 @@ const MyVehicle = (props) => {
               <Text style={styles.cardStatus}>
                 {item.cost ? `${item.cost}€` : ''}
               </Text>
+
+              <Pressable onPress={() => deleteMaintenance(item.id)}>
+                <Text style={{ color: 'red', marginTop: 8 }}>Eliminar</Text>
+              </Pressable>
             </View>
           ))}
 
