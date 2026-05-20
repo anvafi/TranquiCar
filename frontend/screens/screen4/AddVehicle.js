@@ -55,16 +55,16 @@ const AddVehicle = (props) => {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo añadir el vehículo');
+        Alert.alert('Error', data.message || 'The vehicle could not be added');
         return;
       }
 
-      Alert.alert('Vehículo guardado', data.message);
+      Alert.alert('Vehicle saved', data.message);
       props.navigation.goBack();
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'No se pudo conectar con el servidor');
+      Alert.alert('Error', 'Unable to connect to the server');
     }
   };
   //de cámara
@@ -73,7 +73,7 @@ const AddVehicle = (props) => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();   //petición permisos
 
     if (!permission.granted) {
-      Alert.alert('Permiso de cámara denegado');
+      Alert.alert('Camera permission denied');
       return;
     }
 
@@ -139,12 +139,12 @@ const AddVehicle = (props) => {
             <Text style={styles.addPhotoText}>Add photo</Text>
           </Pressable>
 
-          <Text style={styles.label}>Tipo</Text>
+          <Text style={styles.label}>Type</Text>
           <TextInput
             style={styles.inputFull}
             value={tipo}
             onChangeText={setTipo}
-            placeholder="Ej. Coche / Moto"
+            placeholder="Ej. Car / Motorbike"
           />
 
           <Text style={styles.label}>Marca</Text>
@@ -154,7 +154,7 @@ const AddVehicle = (props) => {
             onChangeText={setMarca}
           />
 
-          <Text style={styles.label}>Modelo</Text>
+          <Text style={styles.label}>Model</Text>
           <TextInput
             style={styles.inputFull}
             value={modelo}
@@ -163,7 +163,7 @@ const AddVehicle = (props) => {
 
           <View style={styles.row}>
             <View style={styles.column}>
-              <Text style={styles.label}>Año</Text>
+              <Text style={styles.label}>Year</Text>
               <TextInput
                 style={styles.inputSmall}
                 value={anio}
@@ -172,7 +172,7 @@ const AddVehicle = (props) => {
               />
             </View>
             <View style={styles.column}>
-              <Text style={styles.label}>Km Actuales</Text>
+              <Text style={styles.label}>current Km</Text>
               <TextInput
                 style={styles.inputSmall}
                 value={km}
