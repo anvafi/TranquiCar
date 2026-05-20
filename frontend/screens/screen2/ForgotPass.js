@@ -30,18 +30,18 @@ export default function ForgotPasswordScreen({ navigation }) {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo enviar el correo.');
+        Alert.alert('Error', data.message || 'The email could not be sent');
         return;
       }
 
       Alert.alert(
-        '¡Correo enviado!',
-        'Revisa tu bandeja de entrada para restablecer tu contraseña.',
+        'Email sending!',
+        'Check your inbox to reset your password.',
         [{ text: 'OK', onPress: () => navigation.goBack() }]
       );
 
     } catch (error) {
-      Alert.alert('Error', 'No se pudo conectar con el servidor.');
+      Alert.alert('Error', 'Could not connect to the server.');
     } finally {
       setLoading(false);
     }
