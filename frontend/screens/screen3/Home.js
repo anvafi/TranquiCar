@@ -109,7 +109,7 @@ export default function AddVehicle(props) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.logoContainer}>
           <Image
-            source={require('../../assets/logoX.png')}
+            source={require('../../assets/logoNegro.png')}
             style={styles.logo}
             resizeMode="contain"
           />
