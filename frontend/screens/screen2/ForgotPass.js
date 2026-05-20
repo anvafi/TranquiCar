@@ -59,7 +59,7 @@ export default function ForgotPasswordScreen({ navigation }) {
     </Pressable>
 
     <Image
-      source={require('../../assets/Image.png')}
+      source={require('../../assets/logoBlanco.png')}
       style={styles.logo}
     />
     
