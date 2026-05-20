@@ -14,7 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const MyVehicle = (props) => {
   const [vehicle, setVehicle] = useState(null);
-  const [maintenance, setMaintenance] = useState([]);
+  const [reminders, setReminders] = useState([]);
   const { vehicleId } = props.route.params;
 
   useEffect(() => {
@@ -37,13 +37,13 @@ const MyVehicle = (props) => {
 
       setVehicle(vehicleData);
 
-      const maintenanceResponse = await fetch(
-        `http://192.168.1.34:3000/api/maintenance/vehicle/${vehicleId}`
+      const remindersResponse = await fetch(
+        `http://192.168.1.34:3000/api/reminders/vehicle/${vehicleId}`
       );
 
-      const maintenanceData = await maintenanceResponse.json();
+      const remindersData = await remindersResponse.json();
 
-      setMaintenance(maintenanceData);
+      setReminders(remindersData);
 
     } catch (error) {
 
@@ -140,36 +140,38 @@ const MyVehicle = (props) => {
               <Text style={[styles.cardStatus, { color: item.color }]}>{item.estado}</Text>
             </View>
           ))} */}
-          {/* TARJETA (MAINTENANCE) */}
-          {maintenance.map((item) => (
-            <View key={item.id} style={styles.maintenanceCard}>
-              <View>
-                <Text style={styles.cardTitle}>{item.maintenanceType}</Text>
-                <Text style={styles.cardSubtitle}>
-                  {item.date} - {item.kilometers} km
+          {reminders.map((item) => {
+            const remainingKm =
+              item.nextReminderKm - vehicle.mileage;
+            return (
+              <View key={item.id} style={styles.maintenanceCard}>
+
+                <View>
+                  <Text style={styles.cardTitle}>
+                    {item.maintenanceType}
+                  </Text>
+
+                  {item.kilometersInterval ? (
+                    <Text style={styles.cardSubtitle}>
+                      Cada {item.kilometersInterval} km
+                    </Text>
+                  ) : null}
+
+                  {item.monthsInterval ? (
+                    <Text style={styles.cardSubtitle}>
+                      Cada {item.monthsInterval} meses
+                    </Text>
+                  ) : null}
+                </View>
+
+                <Text style={styles.cardStatus}>
+                  En {remainingKm.toLocaleString()} Km
                 </Text>
-                {item.notes ? (
-                  <Text style={styles.cardSubtitle}>{item.notes}</Text>
-                ) : null}
+
               </View>
+            );
 
-              <Text style={styles.cardStatus}>
-                {item.cost ? `${item.cost}€` : ''}
-              </Text>
-
-              <Pressable
-                onPress={() => props.navigation.navigate('EditMaintenance', {
-                  maintenance: item,
-                })}
-              >
-                <Text style={{ color: '#8B1A1A', marginTop: 8 }}>Editar</Text>
-              </Pressable>
-
-              {/* <Pressable onPress={() => deleteMaintenance(item.id)}>
-                <Text style={{ color: 'red', marginTop: 8 }}>Eliminar</Text>
-              </Pressable> */}
-            </View>
-          ))}
+          })}
 
           {/* BOTONES DE ACCIÓN */}
           <Pressable style={styles.actionButton} onPress={() => props.navigation.navigate('AddMaintenance', {
@@ -179,12 +181,12 @@ const MyVehicle = (props) => {
           </Pressable>
 
           <Pressable style={[styles.actionButton, { marginTop: 15 }]} onPress={() => props.navigation.navigate('AddReminder', {
-            vehicleId: vehicleId
+            vehicleId: vehicleId,
+            currentMileage: vehicle.mileage
           })}>
             <Text style={styles.actionButtonText}>+ Reminder</Text>
           </Pressable>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );

@@ -20,7 +20,7 @@ const AddReminder = (props) => {
   const [tiresKm, setTiresKm] = useState('');
   const [tiresMonths, setTiresMonths] = useState('');
 
-  const { vehicleId } = props.route.params;
+  const { vehicleId, currentMileage } = props.route.params;
 
   // const handleAddReminder = () => {
 
@@ -60,7 +60,7 @@ const AddReminder = (props) => {
           reminderType: 'mixed',
           kilometersInterval: oilKm ? Number(oilKm) : null,
           monthsInterval: oilMonths ? Number(oilMonths) : null,
-          nextReminderKm: oilKm ? Number(oilKm) : null,
+          nextReminderKm: oilKm ? Number(currentMileage) + Number(oilKm) : null,
           nextReminderDate: null,
           vehicleId,
         });
@@ -72,7 +72,7 @@ const AddReminder = (props) => {
           reminderType: 'mixed',
           kilometersInterval: filtersKm ? Number(filtersKm) : null,
           monthsInterval: filtersMonths ? Number(filtersMonths) : null,
-          nextReminderKm: filtersKm ? Number(filtersKm) : null,
+          nextReminderKm: filtersKm ? Number(currentMileage) + Number(filtersKm) : null,
           nextReminderDate: null,
           vehicleId,
         });
@@ -84,7 +84,7 @@ const AddReminder = (props) => {
           reminderType: 'mixed',
           kilometersInterval: tiresKm ? Number(tiresKm) : null,
           monthsInterval: tiresMonths ? Number(tiresMonths) : null,
-          nextReminderKm: tiresKm ? Number(tiresKm) : null,
+          nextReminderKm: tiresKm ? Number(currentMileage) + Number(tiresKm) : null,
           nextReminderDate: null,
           vehicleId,
         });
