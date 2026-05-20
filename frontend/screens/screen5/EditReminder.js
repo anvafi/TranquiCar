@@ -67,7 +67,7 @@ const EditReminder = (props) => {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo actualizar');
+        Alert.alert('Error', data.message || 'Could not update');
         return;
       }
 
@@ -76,7 +76,7 @@ const EditReminder = (props) => {
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'No se pudo conectar con el servidor');
+      Alert.alert('Error', 'Unable to connect to the server');
     }
   };
 
@@ -110,15 +110,15 @@ const EditReminder = (props) => {
   // };
   const handleDelete = () => {
     Alert.alert(
-      'Eliminar',
-      '¿Seguro que quieres eliminar este reminder?',
+      'Delete',
+      'Are you sure you want to delete this reminder?',
       [
         {
-          text: 'Cancelar',
+          text: 'Cancel',
           style: 'cancel',
         },
         {
-          text: 'Eliminar',
+          text: 'Delete',
           style: 'destructive',
           onPress: async () => {
             try {
@@ -132,16 +132,16 @@ const EditReminder = (props) => {
               const data = await response.json();
 
               if (!response.ok) {
-                Alert.alert('Error', data.message || 'No se pudo eliminar');
+                Alert.alert('Error', data.message || 'Could not delete');
                 return;
               }
 
-              Alert.alert('Eliminado', data.message);
+              Alert.alert('Deleted', data.message);
               props.navigation.goBack();
 
             } catch (error) {
               console.log(error);
-              Alert.alert('Error', 'No se pudo conectar con el servidor');
+              Alert.alert('Error', 'Unable to connect to the server');
             }
           },
         },
@@ -209,21 +209,21 @@ const EditReminder = (props) => {
             value={km}
             onChangeText={setKm}
           /> */}
-          <Text style={styles.label}>Tipo de mantenimiento</Text>
+          <Text style={styles.label}>Maintenance type</Text>
           <TextInput
             style={styles.input}
             value={maintenanceType}
             onChangeText={setMaintenanceType}
           />
 
-          <Text style={styles.label}>Tipo de recordatorio</Text>
+          <Text style={styles.label}>Reminder type</Text>
           <TextInput
             style={styles.input}
             value={reminderType}
             onChangeText={setReminderType}
           />
 
-          <Text style={styles.label}>Intervalo en kilómetros</Text>
+          <Text style={styles.label}>Interval in kilometers</Text>
           <TextInput
             style={styles.input}
             value={kilometersInterval}
@@ -231,7 +231,7 @@ const EditReminder = (props) => {
             keyboardType="numeric"
           />
 
-          <Text style={styles.label}>Intervalo en meses</Text>
+          <Text style={styles.label}>Interval in month</Text>
           <TextInput
             style={styles.input}
             value={monthsInterval}
@@ -239,7 +239,7 @@ const EditReminder = (props) => {
             keyboardType="numeric"
           />
 
-          <Text style={styles.label}>Próximo aviso en km</Text>
+          <Text style={styles.label}>Next warning in km</Text>
           <TextInput
             style={styles.input}
             value={nextReminderKm}
@@ -247,7 +247,7 @@ const EditReminder = (props) => {
             keyboardType="numeric"
           />
 
-          <Text style={styles.label}>Próxima fecha</Text>
+          <Text style={styles.label}>Next date</Text>
           <TextInput
             style={styles.input}
             value={nextReminderDate}
@@ -261,7 +261,7 @@ const EditReminder = (props) => {
             onPress={handleEdit}
           >
             <Text style={styles.buttonText}>
-              Guardar cambios
+              Save changes
             </Text>
           </Pressable>
 
@@ -271,7 +271,7 @@ const EditReminder = (props) => {
             onPress={handleDelete}
           >
             <Text style={styles.buttonText}>
-              Eliminar reminder
+              Delete reminder
             </Text>
           </Pressable>
 
