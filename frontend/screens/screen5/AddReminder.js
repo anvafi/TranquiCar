@@ -199,12 +199,12 @@ const AddReminder = (props) => {
         }
       }
 
-      Alert.alert('Success', 'Reminders created correctly'');
+      Alert.alert('Success', 'Reminders created correctly');
       props.navigation.goBack();
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'Could not connect to the server'');
+      Alert.alert('Error', 'Could not connect to the server');
     }
   };
 
