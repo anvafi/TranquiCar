@@ -27,11 +27,11 @@ const startServer = async () => {
 
     console.log("Conectado a bd");
 
-    await sequelize.sync({ alter: true });                    //mantener alter?
+    await sequelize.sync({ alter: true });
 
-    console.log("sync de tablas");
+    //console.log("sincronización");
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`Servidor ejecutándose en puerto ${PORT}`);
     });
 
