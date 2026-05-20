@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ImageBackground,
   Image,
-  Alert,  //nuevo alert
+  Alert
 } from 'react-native';
 import Context from '../../context/Context';
 
@@ -15,11 +15,7 @@ const Screen1 = (props) => {
   const [screen, setScreen] = useState('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(Context);  //objeto, no array
-
-  // function handleLogin() {
-  //   alert('Login realizado');
-  // }
+  const { login } = useContext(Context);
 
   async function handleLogin() {
     try {
@@ -76,6 +72,8 @@ const Screen1 = (props) => {
         <View style={styles.card}>
           <TextInput
             style={styles.input}
+            keyboardType="email-address"
+            autoCapitalize="none"
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
@@ -92,9 +90,9 @@ const Screen1 = (props) => {
           />
         </View>
 
-          <Pressable onPress={() => { props.navigation.navigate('Forgot Password')}}>
+        <Pressable onPress={() => { props.navigation.navigate('Forgot Password') }}>
           <Text style={styles.link}> Forgot Your Password? </Text>
-          </Pressable>
+        </Pressable>
 
 
         <Pressable style={styles.button}

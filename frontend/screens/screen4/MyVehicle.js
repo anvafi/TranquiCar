@@ -15,6 +15,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const MyVehicle = (props) => {
   const [vehicle, setVehicle] = useState(null);
   const [reminders, setReminders] = useState([]);
+  const [selectedReminder, setSelectedReminder] = useState(null);
   const { vehicleId } = props.route.params;
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const MyVehicle = (props) => {
   }, [props.navigation]);
 
   const loadData = async () => {
-    //fech cambio hardcodeados
+
     try {
 
       const vehicleResponse = await fetch(
@@ -51,50 +52,36 @@ const MyVehicle = (props) => {
 
     }
   };
-  const deleteMaintenance = async (maintenanceId) => {
-    try {
-      const response = await fetch(
-        `http://192.168.1.34:3000/api/maintenance/${maintenanceId}`,
-        {
-          method: 'DELETE',
-        }
-      );
 
-      const data = await response.json();
+  // const deleteMaintenance = async (maintenanceId) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://192.168.1.34:3000/api/maintenance/${maintenanceId}`,
+  //       {
+  //         method: 'DELETE',
+  //       }
+  //     );
 
-      if (!response.ok) {
-        Alert.alert('No se pudo eliminar', data.message);
-        return;
-      }
+  //     const data = await response.json();
 
-      Alert.alert('Eliminado', data.message);
+  //     if (!response.ok) {
+  //       Alert.alert('No se pudo eliminar', data.message);
+  //       return;
+  //     }
 
-      loadData();
+  //     Alert.alert('Eliminado', data.message);
 
-    } catch (error) {
-      console.log(error);
-      Alert.alert('No se pudo conectar con el servidor');
-    }
+  //     loadData();
 
-    // setVehicle({
-    //   foto: 'https://soymotor.com/sites/default/files/imagenes/noticia/volkswagen-touareg-2017-t-prime-concept-28.jpg',
-    //   marca: 'Volkswagen',
-    //   modelo: 'T-prime',
-    //   anio: '2017',
-    //   kmActuales: '45.230'
-    // });
-
-    // setMaintenance([
-    //   { id: 1, titulo: 'Aceite', detalle: '15.000 Km o 12 meses', estado: 'En 9.800 Km', color: '#2ecc71' },
-    //   { id: 2, titulo: 'Filtros', detalle: '30.000 Km', estado: 'En 14.770 Km', color: '#f1c40f' }
-    // ]);
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //     Alert.alert('No se pudo conectar con el servidor');
+  //   }
+  //  };
 
   const hasCriticalReminder = reminders.some((item) => {
 
-    const remainingKm =
-      item.nextReminderKm - vehicle.mileage;
-
+    const remainingKm = item.nextReminderKm - vehicle.mileage;
     return remainingKm < 2000;
   });
 
@@ -118,7 +105,6 @@ const MyVehicle = (props) => {
         </View>
 
         {/* INFO DEL VEHÍCULO */}
-        {/* cambiado campos de vhicle a inglés como backend (foto pendiente) */}
         <View style={styles.contentContainer}>
           {vehicle && (
             <View style={styles.vehicleInfoSection}>
@@ -176,7 +162,17 @@ const MyVehicle = (props) => {
               statusColor = '#e74c3c';
             }
             return (
-              <View key={item.id} style={styles.maintenanceCard}>
+              <Pressable
+                key={item.id}
+                style={[
+                  styles.maintenanceCard,
+                  selectedReminder?.id === item.id && {
+                    borderColor: '#8B1A1A',
+                    borderWidth: 2,
+                  }
+                ]}
+                onPress={() => setSelectedReminder(item)}       //seleccionando tarjeta
+              >
 
                 <View>
                   <Text style={styles.cardTitle}>
@@ -196,19 +192,29 @@ const MyVehicle = (props) => {
                   ) : null}
                 </View>
 
-                <Text style={styles.cardStatus, { color: statusColor }}>
+                <Text style={[styles.cardStatus, { color: statusColor }]}>
                   En {remainingKm.toLocaleString()} Km
                 </Text>
 
-              </View>
+              </Pressable>
             );
-
           })}
 
           {/* BOTONES DE ACCIÓN */}
-          <Pressable style={styles.actionButton} onPress={() => props.navigation.navigate('AddMaintenance', {
-            vehicleId: vehicleId
-          })}>
+
+          <Pressable
+            style={styles.actionButton}
+            onPress={() => {
+
+              console.log('Reminder seleccionado:', selectedReminder);
+
+              props.navigation.navigate('AddMaintenance', {
+                vehicleId: vehicleId,
+                reminder: selectedReminder,
+              });
+
+            }}
+          >
             <Text style={styles.actionButtonText}>+ Maintenance</Text>
           </Pressable>
 

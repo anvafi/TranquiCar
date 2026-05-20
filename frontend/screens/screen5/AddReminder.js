@@ -4,12 +4,79 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Image, ScrollView, SafeAreaView, Switch, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
+const ReminderBlock = ({
+  title,
+  enabled,
+  setEnabled,
+  km,
+  setKm,
+  months,
+  setMonths,
+}) => (
+  <View style={styles.reminderBlock}>
+
+    <View style={styles.titleRow}>
+      <Text style={styles.reminderTitle}>{title}</Text>
+
+      <Switch
+        trackColor={{ false: '#767577', true: '#6C4AB6' }}
+        thumbColor={'#FFFFFF'}
+        ios_backgroundColor="#767577"
+        onValueChange={setEnabled}
+        value={enabled}
+      />
+    </View>
+
+    <Text style={styles.label}>Avisar cada:</Text>
+
+    <View style={styles.inputsRow}>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.smallInput}
+          keyboardType="numeric"
+          value={km}
+          onChangeText={setKm}
+        />
+
+        <Text style={styles.inputText}>Km</Text>
+      </View>
+
+      <Text style={styles.separator}>|</Text>
+
+      <Text style={styles.middleText}>o cada</Text>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.smallInput}
+          keyboardType="numeric"
+          value={months}
+          onChangeText={setMonths}
+        />
+
+        <Text style={styles.inputText}>meses</Text>
+      </View>
+
+    </View>
+
+    <View style={styles.divider} />
+
+  </View>
+);
 
 const AddReminder = (props) => {
 
-  const [oilEnabled, setOilEnabled] = useState(true);
-  const [filtersEnabled, setFiltersEnabled] = useState(true);
-  const [tiresEnabled, setTiresEnabled] = useState(true);
+  const [oilEnabled, setOilEnabled] = useState(false);
+  const [filtersEnabled, setFiltersEnabled] = useState(false);
+  const [tiresEnabled, setTiresEnabled] = useState(false);
+  const [brakesEnabled, setBrakesEnabled] = useState(false);
+  const [itvEnabled, setItvEnabled] = useState(false);
+
+  const [brakesKm, setBrakesKm] = useState('');
+  const [brakesMonths, setBrakesMonths] = useState('');
+
+  const [itvKm, setItvKm] = useState('');
+  const [itvMonths, setItvMonths] = useState('');
 
   const [oilKm, setOilKm] = useState('');
   const [oilMonths, setOilMonths] = useState('');
@@ -90,6 +157,30 @@ const AddReminder = (props) => {
         });
       }
 
+      if (brakesEnabled) {
+        remindersToCreate.push({
+          maintenanceType: 'Frenos',
+          reminderType: brakesKm && brakesMonths ? 'mixed' : brakesKm ? 'km' : 'date',
+          kilometersInterval: brakesKm ? Number(brakesKm) : null,
+          monthsInterval: brakesMonths ? Number(brakesMonths) : null,
+          nextReminderKm: brakesKm ? Number(currentMileage) + Number(brakesKm) : null,
+          nextReminderDate: null,
+          vehicleId,
+        });
+      }
+
+      if (itvEnabled) {
+        remindersToCreate.push({
+          maintenanceType: 'ITV',
+          reminderType: itvKm && itvMonths ? 'mixed' : itvKm ? 'km' : 'date',
+          kilometersInterval: itvKm ? Number(itvKm) : null,
+          monthsInterval: itvMonths ? Number(itvMonths) : null,
+          nextReminderKm: itvKm ? Number(currentMileage) + Number(itvKm) : null,
+          nextReminderDate: null,
+          vehicleId,
+        });
+      }
+
       for (const reminder of remindersToCreate) {
         const response = await fetch('http://192.168.1.34:3000/api/reminders', {
           method: 'POST',
@@ -116,65 +207,7 @@ const AddReminder = (props) => {
     }
   };
 
-  const ReminderBlock = ({
-    title,
-    enabled,
-    setEnabled,
-    km,
-    setKm,
-    months,
-    setMonths,
-  }) => (
-    <View style={styles.reminderBlock}>
 
-      <View style={styles.titleRow}>
-        <Text style={styles.reminderTitle}>{title}</Text>
-
-        <Switch
-          trackColor={{ false: '#767577', true: '#6C4AB6' }}
-          thumbColor={'#FFFFFF'}
-          ios_backgroundColor="#767577"
-          onValueChange={setEnabled}
-          value={enabled}
-        />
-      </View>
-
-      <Text style={styles.label}>Avisar cada:</Text>
-
-      <View style={styles.inputsRow}>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.smallInput}
-            keyboardType="numeric"
-            value={km}
-            onChangeText={setKm}
-          />
-
-          <Text style={styles.inputText}>Km</Text>
-        </View>
-
-        <Text style={styles.separator}>|</Text>
-
-        <Text style={styles.middleText}>o cada</Text>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.smallInput}
-            keyboardType="numeric"
-            value={months}
-            onChangeText={setMonths}
-          />
-
-          <Text style={styles.inputText}>meses</Text>
-        </View>
-
-      </View>
-
-      <View style={styles.divider} />
-
-    </View>
-  );
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -226,6 +259,26 @@ const AddReminder = (props) => {
             setKm={setTiresKm}
             months={tiresMonths}
             setMonths={setTiresMonths}
+          />
+
+          <ReminderBlock
+            title="Frenos"
+            enabled={brakesEnabled}
+            setEnabled={setBrakesEnabled}
+            km={brakesKm}
+            setKm={setBrakesKm}
+            months={brakesMonths}
+            setMonths={setBrakesMonths}
+          />
+
+          <ReminderBlock
+            title="ITV"
+            enabled={itvEnabled}
+            setEnabled={setItvEnabled}
+            km={itvKm}
+            setKm={setItvKm}
+            months={itvMonths}
+            setMonths={setItvMonths}
           />
 
           {/* BOTÓN */}

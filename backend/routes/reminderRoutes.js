@@ -93,15 +93,14 @@ router.get("/user/:userId", async (req, res) => {
         res.status(200).json(reminders);
 
     } catch (error) {
+
         console.log(error);
 
-        res.status(500).json({
-            message: "Error obteniendo recordatorios del usuario",
-        });
+        res.status(500).json({ message: "Error obteniendo recordatorios del usuario", });
     }
 });
 
-// ALTER record
+// PUT record
 
 router.put("/:id", async (req, res) => {
     try {
@@ -145,6 +144,42 @@ router.put("/:id", async (req, res) => {
 
         res.status(500).json({
             message: "Error actualizando recordatorio",
+        });
+    }
+});
+
+// PUT remainder-manteinance
+
+router.put("/:id/complete", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const reminder = await Reminder.findByPk(id);
+
+        if (!reminder) {
+            return res.status(404).json({ message: "Recordatorio no encontrado", });
+        }
+
+        const newNextReminderKm =
+            reminder.nextReminderKm && reminder.kilometersInterval
+                ? reminder.nextReminderKm + reminder.kilometersInterval
+                : reminder.nextReminderKm;
+
+        await reminder.update({
+            nextReminderKm: newNextReminderKm,
+            isCompleted: false,
+        });
+
+        res.status(200).json({
+            message: "Mantenimiento completado. Próximo recordatorio actualizado.",
+            reminder,
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error completando recordatorio",
         });
     }
 });

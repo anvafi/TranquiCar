@@ -15,7 +15,10 @@ import { Picker } from '@react-native-picker/picker';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const AddMaintenance = (props) => {
-    const [maintenanceType, setMaintenanceType] = useState('Aceite');
+    const { vehicleId, reminder } = props.route.params;
+    console.log(reminder);
+
+    const [maintenanceType, setMaintenanceType] = useState(reminder ? reminder.maintenanceType : 'Aceite');
 
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
@@ -25,7 +28,7 @@ const AddMaintenance = (props) => {
     const [cost, setCost] = useState('');
     const [notes, setNotes] = useState('');
 
-    const { vehicleId } = props.route.params;
+
 
     const handleAddMaintenance = async () => {
         // const maintenanceData = {
@@ -49,6 +52,7 @@ const AddMaintenance = (props) => {
                     cost: cost ? Number(cost) : null,
                     notes,
                     vehicleId,
+                    reminderId: reminder ? reminder.id : null,
                 }),
             });
 
@@ -96,7 +100,7 @@ const AddMaintenance = (props) => {
                             <Picker.Item label="Aceite" value="Aceite" />
                             <Picker.Item label="Filtros" value="Filtros" />
                             <Picker.Item label="Frenos" value="Frenos" />
-                            <Picker.Item label="Neumáticos" value="Neumaticos" />
+                            <Picker.Item label="Neumáticos" value="Neumáticos" />
                             <Picker.Item label="ITV" value="ITV" />
                         </Picker>
                     </View>

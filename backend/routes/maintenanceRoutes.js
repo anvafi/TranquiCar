@@ -1,7 +1,8 @@
 const express = require("express");
+
 const Maintenance = require("../models/Maintenance");
 const Vehicle = require("../models/Vehicle");
-// const { DELETE } = require("sequelize/lib/query-types");
+const Reminder = require("../models/Reminder");
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.post("/", async (req, res) => {
             cost,
             notes,
             vehicleId,
+            reminderId
         } = req.body;
 
         if (!maintenanceType || !date || !kilometers || !vehicleId) {
@@ -32,6 +34,20 @@ router.post("/", async (req, res) => {
             notes,
             VehicleId: vehicleId,
         });
+        //
+        if (reminderId) {
+
+            const reminder = await Reminder.findByPk(reminderId);
+
+            if (reminder && reminder.kilometersInterval) {
+
+                await reminder.update({
+                    nextReminderKm:
+                        Number(kilometers) + reminder.kilometersInterval,
+                });
+
+            }
+        }
 
         res.status(201).json({
             message: "Mantenimiento creado correctamente",
