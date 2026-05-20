@@ -92,6 +92,10 @@ const Screen1 = (props) => {
           />
         </View>
 
+          <Pressable onPress={() => { props.navigation.navigate('Forgot Password')}}>
+          <Text style={styles.link}> Forgot Your Password? </Text>
+          </Pressable>
+
 
         <Pressable style={styles.button}
           // onPress={() => {
