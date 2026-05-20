@@ -60,7 +60,7 @@ const Screen2 = (props) => {
 
 
         <Image
-          source={require('../../assets/Image.png')}
+          source={require('../../assets/logoBlanco.png')}
           style={styles.logo}
         />
       </View>
