@@ -147,7 +147,7 @@ const EditMaintenance = (props) => {
             </Pressable>
 
             <Image
-              source={require('../../assets/Image.png')}
+              source={require('../../assets/logoBlanco.png')}
               style={styles.logo}
               resizeMode="contain"
             />
