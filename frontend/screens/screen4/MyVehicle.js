@@ -178,7 +178,9 @@ const MyVehicle = (props) => {
             <Text style={styles.actionButtonText}>+ Maintenance</Text>
           </Pressable>
 
-          <Pressable style={[styles.actionButton, { marginTop: 15 }]} onPress={() => props.navigation.navigate('AddReminder')}>
+          <Pressable style={[styles.actionButton, { marginTop: 15 }]} onPress={() => props.navigation.navigate('AddReminder', {
+            vehicleId: vehicleId
+          })}>
             <Text style={styles.actionButtonText}>+ Reminder</Text>
           </Pressable>
         </View>

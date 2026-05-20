@@ -1,7 +1,7 @@
 // screens/screen6/AddReminder.js
 
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, Image, ScrollView, SafeAreaView, Switch } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Image, ScrollView, SafeAreaView, Switch, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
@@ -20,33 +20,100 @@ const AddReminder = (props) => {
   const [tiresKm, setTiresKm] = useState('');
   const [tiresMonths, setTiresMonths] = useState('');
 
-  const handleAddReminder = () => {
+  const { vehicleId } = props.route.params;
 
-    const remindersData = {
-      oil: {
-        enabled: oilEnabled,
-        km: oilKm,
-        months: oilMonths,
-      },
+  // const handleAddReminder = () => {
 
-      filters: {
-        enabled: filtersEnabled,
-        km: filtersKm,
-        months: filtersMonths,
-      },
+  //   const remindersData = {
+  //     oil: {
+  //       enabled: oilEnabled,
+  //       km: oilKm,
+  //       months: oilMonths,
+  //     },
 
-      tires: {
-        enabled: tiresEnabled,
-        km: tiresKm,
-        months: tiresMonths,
-      },
-    };
+  //     filters: {
+  //       enabled: filtersEnabled,
+  //       km: filtersKm,
+  //       months: filtersMonths,
+  //     },
 
-    console.log(remindersData);
+  //     tires: {
+  //       enabled: tiresEnabled,
+  //       km: tiresKm,
+  //       months: tiresMonths,
+  //     },
+  //   };
 
-    alert('Recordatorios añadidos');
+  //   console.log(remindersData);
 
-    props.navigation.goBack();
+  //   alert('Recordatorios añadidos');
+
+  //   props.navigation.goBack();
+  // };
+  const handleAddReminder = async () => {
+    try {
+      const remindersToCreate = [];
+
+      if (oilEnabled) {
+        remindersToCreate.push({
+          maintenanceType: 'Aceite',
+          reminderType: 'mixed',
+          kilometersInterval: oilKm ? Number(oilKm) : null,
+          monthsInterval: oilMonths ? Number(oilMonths) : null,
+          nextReminderKm: oilKm ? Number(oilKm) : null,
+          nextReminderDate: null,
+          vehicleId,
+        });
+      }
+
+      if (filtersEnabled) {
+        remindersToCreate.push({
+          maintenanceType: 'Filtros',
+          reminderType: 'mixed',
+          kilometersInterval: filtersKm ? Number(filtersKm) : null,
+          monthsInterval: filtersMonths ? Number(filtersMonths) : null,
+          nextReminderKm: filtersKm ? Number(filtersKm) : null,
+          nextReminderDate: null,
+          vehicleId,
+        });
+      }
+
+      if (tiresEnabled) {
+        remindersToCreate.push({
+          maintenanceType: 'Neumáticos',
+          reminderType: 'mixed',
+          kilometersInterval: tiresKm ? Number(tiresKm) : null,
+          monthsInterval: tiresMonths ? Number(tiresMonths) : null,
+          nextReminderKm: tiresKm ? Number(tiresKm) : null,
+          nextReminderDate: null,
+          vehicleId,
+        });
+      }
+
+      for (const reminder of remindersToCreate) {
+        const response = await fetch('http://192.168.1.34:3000/api/reminders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reminder),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          Alert.alert('Error', data.message || 'No se pudo crear un recordatorio');
+          return;
+        }
+      }
+
+      Alert.alert('Éxito', 'Recordatorios creados correctamente');
+      props.navigation.goBack();
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'No se pudo conectar con el servidor');
+    }
   };
 
   const ReminderBlock = ({
