@@ -28,7 +28,7 @@ const ReminderBlock = ({
       />
     </View>
 
-    <Text style={styles.label}>Avisar cada:</Text>
+    <Text style={styles.label}>Notify each:</Text>
 
     <View style={styles.inputsRow}>
 
@@ -45,7 +45,7 @@ const ReminderBlock = ({
 
       <Text style={styles.separator}>|</Text>
 
-      <Text style={styles.middleText}>o cada</Text>
+      <Text style={styles.middleText}>or each</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -55,7 +55,7 @@ const ReminderBlock = ({
           onChangeText={setMonths}
         />
 
-        <Text style={styles.inputText}>meses</Text>
+        <Text style={styles.inputText}>months</Text>
       </View>
 
     </View>
@@ -124,7 +124,7 @@ const AddReminder = (props) => {
 
       if (oilEnabled) {
         remindersToCreate.push({
-          maintenanceType: 'Aceite',
+          maintenanceType: 'Oil',
           reminderType: 'mixed',
           kilometersInterval: oilKm ? Number(oilKm) : null,
           monthsInterval: oilMonths ? Number(oilMonths) : null,
@@ -136,7 +136,7 @@ const AddReminder = (props) => {
 
       if (filtersEnabled) {
         remindersToCreate.push({
-          maintenanceType: 'Filtros',
+          maintenanceType: 'Filters',
           reminderType: 'mixed',
           kilometersInterval: filtersKm ? Number(filtersKm) : null,
           monthsInterval: filtersMonths ? Number(filtersMonths) : null,
@@ -148,7 +148,7 @@ const AddReminder = (props) => {
 
       if (tiresEnabled) {
         remindersToCreate.push({
-          maintenanceType: 'Neumáticos',
+          maintenanceType: 'Tires',
           reminderType: 'mixed',
           kilometersInterval: tiresKm ? Number(tiresKm) : null,
           monthsInterval: tiresMonths ? Number(tiresMonths) : null,
@@ -160,7 +160,7 @@ const AddReminder = (props) => {
 
       if (brakesEnabled) {
         remindersToCreate.push({
-          maintenanceType: 'Frenos',
+          maintenanceType: 'Brakes',
           reminderType: brakesKm && brakesMonths ? 'mixed' : brakesKm ? 'km' : 'date',
           kilometersInterval: brakesKm ? Number(brakesKm) : null,
           monthsInterval: brakesMonths ? Number(brakesMonths) : null,
@@ -194,17 +194,17 @@ const AddReminder = (props) => {
         const data = await response.json();
 
         if (!response.ok) {
-          Alert.alert('Error', data.message || 'No se pudo crear un recordatorio');
+          Alert.alert('Error', data.message || 'A reminder could not be created.');
           return;
         }
       }
 
-      Alert.alert('Éxito', 'Recordatorios creados correctamente');
+      Alert.alert('Success', 'Reminders created correctly'');
       props.navigation.goBack();
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'No se pudo conectar con el servidor');
+      Alert.alert('Error', 'Could not connect to the server'');
     }
   };
 
@@ -233,7 +233,7 @@ const AddReminder = (props) => {
         <View style={styles.contenido}>
 
           <ReminderBlock
-            title="Aceite"
+            title="Oil"
             enabled={oilEnabled}
             setEnabled={setOilEnabled}
             km={oilKm}
@@ -243,7 +243,7 @@ const AddReminder = (props) => {
           />
 
           <ReminderBlock
-            title="Filtros"
+            title="Filters"
             enabled={filtersEnabled}
             setEnabled={setFiltersEnabled}
             km={filtersKm}
@@ -253,7 +253,7 @@ const AddReminder = (props) => {
           />
 
           <ReminderBlock
-            title="Neumáticos"
+            title="Tires"
             enabled={tiresEnabled}
             setEnabled={setTiresEnabled}
             km={tiresKm}
@@ -263,7 +263,7 @@ const AddReminder = (props) => {
           />
 
           <ReminderBlock
-            title="Frenos"
+            title="Breakes"
             enabled={brakesEnabled}
             setEnabled={setBrakesEnabled}
             km={brakesKm}
