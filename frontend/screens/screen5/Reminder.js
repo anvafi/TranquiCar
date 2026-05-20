@@ -137,7 +137,7 @@ const Reminders = (props) => {
                         </Pressable>
 
                         <Image
-                            source={require('../../assets/logoX.png')}
+                            source={require('../../assets/logoNegro.png')}
                             style={styles.logo}
                             resizeMode="contain"
                         />
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
 
     mainContainer: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: 'white',
     },
 
     headerContainer: {
