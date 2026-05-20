@@ -70,9 +70,8 @@ export default function AddVehicle(props) {
   }
 
   const VehicleList = () => {
+
     return vehicles.map((item, index) => (
-      // <View key={item.id} style={styles.card}>
-      // [TEMPORAL?] He hecho toda la tarjeta Pressable
       <Pressable
         key={item.id}
         style={styles.card}
@@ -81,14 +80,12 @@ export default function AddVehicle(props) {
         })}
       >
         <View style={styles.cardContent}>
-          {/* Lado Izquierdo: Imagen y Nombre */}
           <View style={styles.leftColumn}>
             <Image style={styles.vehicleImage} source={{ uri: item.image }} resizeMode="contain" />
             <Text style={styles.vehicleTitle}>{item.brand} {item.model}</Text>
             <Text style={[styles.statusText, { color: item.statusColor }]}>{item.status}</Text>
           </View>
 
-          {/* Lado Derecho: Info Técnica */}
           <View style={styles.rightColumn}>
             <Text style={styles.infoText}>{item.year}</Text>
             <Text style={styles.infoText}>{item.mileage}</Text>
@@ -101,7 +98,6 @@ export default function AddVehicle(props) {
           </View>
         </View>
       </Pressable>
-      // </View>
     ));
   };
 
@@ -115,8 +111,8 @@ export default function AddVehicle(props) {
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.headerTitle}>Garaje de {user.name}</Text>
-        <Text style={styles.subTitle}>Tus vehículos</Text>
+        <Text style={styles.headerTitle}>Garage of {user.name}</Text>
+        <Text style={styles.subTitle}>Your vehicles</Text>
         <VehicleList />
       </ScrollView>
 

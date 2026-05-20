@@ -32,15 +32,11 @@ const AddVehicle = (props) => {
 
   const handleAddVehicle = async () => {
 
-    // console.log({ tipo, marca, modelo, anio, km });
-    // alert('Vehículo añadido con éxito');
-    // props.navigation.goBack();
-
     try {
       const response = await fetch(`${API_URL}/api/vehicles`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           brand: marca,
@@ -70,25 +66,23 @@ const AddVehicle = (props) => {
   //de cámara
   const takePhoto = async () => {
 
-    const permission = await ImagePicker.requestCameraPermissionsAsync();   //petición permisos
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
 
     if (!permission.granted) {
       Alert.alert('Camera permission denied');
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync({    //abre cámara
-
+    const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],                                       //jugar con el ratio
+      aspect: [16, 9],
       quality: 1,
-
     });
 
     if (!result.canceled) {
 
-      setImage(result.assets[0].uri);   //guarda URI
+      setImage(result.assets[0].uri);
 
     }
 
@@ -107,7 +101,6 @@ const AddVehicle = (props) => {
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false} style={{ flex: 1 }}>
 
-        {/* HEADER OSCURO CON LOGO */}
         <View style={styles.headerBackground}>
           <View style={styles.headerTop}>
             <Pressable onPress={() => props.navigation.goBack()}>
@@ -124,7 +117,6 @@ const AddVehicle = (props) => {
         </View>
 
         <View style={styles.formContainer}>
-          {/* cambiar placeholder */}
           <Pressable style={styles.photoPlaceholder} onPress={takePhoto}>
             {
               image ? (

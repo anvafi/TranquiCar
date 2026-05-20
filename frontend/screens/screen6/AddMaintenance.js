@@ -29,16 +29,8 @@ const AddMaintenance = (props) => {
     const [cost, setCost] = useState('');
     const [notes, setNotes] = useState('');
 
-
-
     const handleAddMaintenance = async () => {
-        // const maintenanceData = {
-        //     maintenanceType,
-        //     date: `${day}/${month}/${year}`,
-        //     kilometers,
-        //     cost,
-        //     notes,
-        // };
+
         try {
 
             const response = await fetch(`${API_URL}/api/maintenance`, {
@@ -56,7 +48,6 @@ const AddMaintenance = (props) => {
                     reminderId: reminder ? reminder.id : null,
                 }),
             });
-
             // console.log(maintenanceData);
             const data = await response.json();
 

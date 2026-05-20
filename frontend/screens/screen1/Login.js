@@ -23,7 +23,7 @@ const Screen1 = (props) => {
       const response = await fetch(`${API_URL}/api/users/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
@@ -37,11 +37,11 @@ const Screen1 = (props) => {
         Alert.alert('Error', data.message || 'No se pudo iniciar sesión');
         return;
       }
-      //
+
       login(data.user);
-      //popup
+
       Alert.alert('Log in correcto', data.message);
-      //lo saco del botón, para que solo navegue si res OK
+
       props.navigation.navigate('Home');
 
     } catch (error) {
@@ -97,11 +97,7 @@ const Screen1 = (props) => {
 
 
         <Pressable style={styles.button}
-          // onPress={() => {
-          //   handleLogin();
-          //   props.navigation.navigate('Home');
 
-          // }}
           onPress={handleLogin}
         >
           <Text style={styles.buttonText}>Enter</Text>

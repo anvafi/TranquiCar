@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 const Context = createContext();
 
 export const Provider = ({ children }) => {
-    //El user de la sesión, pasa a ser el contexto
+
     const [user, setUser] = useState(null);
 
     function login(userData) {
@@ -25,12 +25,6 @@ export const Provider = ({ children }) => {
             {children}
         </Context.Provider>
     );
-    //     const [counter, setCounter] = useState(0);
-    //     return (
-    //         <Context.Provider value={{ counter, setCounter }}>
-    //             {children}
-    //         </Context.Provider>
-    //     );
 };
 
 export default Context;

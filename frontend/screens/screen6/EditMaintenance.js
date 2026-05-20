@@ -1,5 +1,3 @@
-// screens/screen6/EditMaintenance.js
-
 import React, { useState } from 'react';
 
 import {
@@ -22,12 +20,10 @@ const EditMaintenance = (props) => {
 
   const { maintenance } = props.route.params;
 
-  // SEPARAR FECHA
-
   const [maintenanceType, setMaintenanceType] = useState(
     maintenance.maintenanceType
   );
-  const splitDate = maintenance.date.split('-');          //he cambiado el split "/", el back devuelve "-"
+  const splitDate = maintenance.date.split('-');
   const [yearValue, monthValue, dayValue] = splitDate;
 
   const [day, setDay] = useState(dayValue);
@@ -81,29 +77,7 @@ const EditMaintenance = (props) => {
       Alert.alert('Error', 'Unable to connect to the server');
     }
   };
-  //   const updatedMaintenance = {
-  //     ...maintenance,
 
-  //     maintenanceType,
-
-  //     date: `${day}/${month}/${year}`,
-
-  //     kilometers,
-  //     cost,
-  //     notes,
-  //   };
-
-  //   console.log('Maintenance actualizado:', updatedMaintenance);
-
-  //   Alert.alert(
-  //     'Éxito',
-  //     'Mantenimiento actualizado correctamente'
-  //   );
-
-  //   props.navigation.goBack();
-  // };
-
-  // ELIMINAR
   const handleDeleteMaintenance = async () => {
     try {
       const response = await fetch(

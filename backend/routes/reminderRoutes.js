@@ -4,8 +4,6 @@ const Vehicle = require("../models/Vehicle");
 
 const router = express.Router();
 
-//POST crear
-
 router.post("/", async (req, res) => {
     try {
         const {
@@ -48,8 +46,6 @@ router.post("/", async (req, res) => {
     }
 });
 
-//GET recordat
-
 router.get("/vehicle/:vehicleId", async (req, res) => {
     try {
         const { vehicleId } = req.params;
@@ -71,8 +67,6 @@ router.get("/vehicle/:vehicleId", async (req, res) => {
         });
     }
 });
-
-// GET record x Id
 
 router.get("/user/:userId", async (req, res) => {
     try {
@@ -99,8 +93,6 @@ router.get("/user/:userId", async (req, res) => {
         res.status(500).json({ message: "Error obteniendo recordatorios del usuario", });
     }
 });
-
-// PUT record
 
 router.put("/:id", async (req, res) => {
     try {
@@ -148,8 +140,6 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-// PUT remainder-manteinance
-
 router.put("/:id/complete", async (req, res) => {
     try {
         const { id } = req.params;
@@ -184,8 +174,6 @@ router.put("/:id/complete", async (req, res) => {
     }
 });
 
-//DELETE record
-
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -212,4 +200,5 @@ router.delete("/:id", async (req, res) => {
         });
     }
 });
+
 module.exports = router;

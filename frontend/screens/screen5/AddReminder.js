@@ -90,34 +90,6 @@ const AddReminder = (props) => {
 
   const { vehicleId, currentMileage } = props.route.params;
 
-  // const handleAddReminder = () => {
-
-  //   const remindersData = {
-  //     oil: {
-  //       enabled: oilEnabled,
-  //       km: oilKm,
-  //       months: oilMonths,
-  //     },
-
-  //     filters: {
-  //       enabled: filtersEnabled,
-  //       km: filtersKm,
-  //       months: filtersMonths,
-  //     },
-
-  //     tires: {
-  //       enabled: tiresEnabled,
-  //       km: tiresKm,
-  //       months: tiresMonths,
-  //     },
-  //   };
-
-  //   console.log(remindersData);
-
-  //   alert('Recordatorios añadidos');
-
-  //   props.navigation.goBack();
-  // };
   const handleAddReminder = async () => {
     try {
       const remindersToCreate = [];
@@ -208,13 +180,10 @@ const AddReminder = (props) => {
     }
   };
 
-
-
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false}>
 
-        {/* HEADER CON LOGO */}
         <View style={styles.headerBackground}>
           <View style={styles.headerTop}>
             <Pressable onPress={() => props.navigation.goBack()}>

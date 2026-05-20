@@ -1,20 +1,53 @@
-# Sample Snack app
+# Características principales
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+Registro e inicio de sesión de usuarios
+Garaje virtual con múltiples vehículos
+Gestión de mantenimientos
+Recordatorios automáticos por kilómetros o tiempo
+Historial de mantenimientos
+Alertas visuales de mantenimiento próximo
+Edición y eliminación de registros
+Backend REST API
+Base de datos PostgreSQL
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+# Tecnologías utilizadas
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+Frontend:
+React Native
+Expo
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
+Backend:
+Node.js
+Express.js
+Sequelize ORM
+PostgreSQL
 
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
-# notas
+DevOps / Cloud:
+Render
+GitHub
 
-npm install @react-native-picker/picker --save
-npm install express sequelize pg pg-hstore dotenv cors
+# Arquitectura del proyecto
 
-npm install --save-dev nodemon  //  npm run dev
+TranquiCar/
+│
+├── frontend/
+│ ├── assets/
+│ ├── config/
+│ ├── context/
+│ ├── screens/
+│ └── App.js
+│
+├── backend/
+│ ├── config/
+│ ├── models/
+│ ├── routes/
+│ ├── App.js
+│ └── Server.js
+│
+└── README.md
 
+# Clonar repositorio
 
-https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status
+$ git clone https://github.com/TU-USUARIO/TranquiCar.git
+
+Proyecto académico desarrollado con fines educativos.

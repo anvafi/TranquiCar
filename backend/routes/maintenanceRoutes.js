@@ -6,8 +6,6 @@ const Reminder = require("../models/Reminder");
 
 const router = express.Router();
 
-//POST maintenance
-
 router.post("/", async (req, res) => {
     try {
         const {
@@ -36,12 +34,12 @@ router.post("/", async (req, res) => {
         });
         const vehicle = await Vehicle.findByPk(vehicleId);
 
-        if (vehicle && Number(kilometers) > Number(vehicle.mileage)) {      //evitar que un mantenimiento antiguo baje el kilometraje actual del vehículo.
+        if (vehicle && Number(kilometers) > Number(vehicle.mileage)) {
             await vehicle.update({
                 mileage: Number(kilometers),
             });
         }
-        //
+
         if (reminderId) {
 
             const reminder = await Reminder.findByPk(reminderId);
@@ -69,8 +67,6 @@ router.post("/", async (req, res) => {
         });
     }
 });
-
-//GET maintenances x vehículo
 
 router.get("/vehicle/:vehicleId", async (req, res) => {
 
@@ -102,8 +98,6 @@ router.get("/vehicle/:vehicleId", async (req, res) => {
 
 });
 
-//GET maintenances x user (global)
-
 router.get("/user/:userId", async (req, res) => {
     try {
         const { userId } = req.params;
@@ -117,7 +111,7 @@ router.get("/user/:userId", async (req, res) => {
                     },
                 },
             ],
-            order: [["date", "DESC"]],              //ver si lo gestionamos de otra manera
+            order: [["date", "DESC"]],
         });
 
         res.status(200).json(maintenances);
@@ -130,8 +124,6 @@ router.get("/user/:userId", async (req, res) => {
         });
     }
 });
-
-//DELETE maintenace x id
 
 router.delete("/:id", async (req, res) => {
     try {
@@ -159,8 +151,6 @@ router.delete("/:id", async (req, res) => {
         });
     }
 });
-
-//PUT maintenace x id
 
 router.put("/:id", async (req, res) => {
     try {

@@ -8,7 +8,6 @@ const Vehicle = require("./models/Vehicle");
 const Maintenance = require("./models/Maintenance");
 const Reminder = require("./models/Reminder");
 
-//relaciones sequelize
 User.hasMany(Vehicle);
 Vehicle.belongsTo(User);
 Vehicle.hasMany(Maintenance);

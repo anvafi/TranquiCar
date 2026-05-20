@@ -26,50 +26,6 @@ const Reminders = (props) => {
         return unsubscribe;
     }, [props.navigation, user]);
 
-    // DATOS DE EJEMPLO
-    // Aquí después cargarás los reminders desde BD/API
-
-    //   const [reminders] = useState([
-    //     {
-    //       id: 1,
-    //       title: 'Aceite',
-    //       date: '15 Mar 2026',
-    //       km: '40.000 km',
-    //       year: '2026',
-    //     },
-
-    //     {
-    //       id: 2,
-    //       title: 'Filtros',
-    //       date: '10 Oct 2026',
-    //       km: '35.200 km',
-    //       year: '2026',
-    //     },
-
-    //     {
-    //       id: 3,
-    //       title: 'Frenos',
-    //       date: '18 Nov 2027',
-    //       km: '20.000 km',
-    //       year: '2027',
-    //     },
-
-    //     {
-    //       id: 4,
-    //       title: 'Neumaticos',
-    //       date: '22 Abr 2027',
-    //       km: '28.000 km',
-    //       year: '2027',
-    //     },
-
-    //     {
-    //       id: 5,
-    //       title: 'Neumaticos',
-    //       date: '25 Abr 2027',
-    //       km: '28.000 km',
-    //       year: '2027',
-    //     },
-    //   ]);
     const [reminders, setReminders] = useState([]);
     const { user } = useContext(Context);
 
@@ -88,20 +44,6 @@ const Reminders = (props) => {
         }
     };
 
-    // AGRUPAR POR AÑO
-    // const groupedReminders = reminders.reduce((groups, reminder) => {
-
-    //     const year = reminder.year;
-
-    //     if (!groups[year]) {
-    //         groups[year] = [];
-    //     }
-
-    //     groups[year].push(reminder);
-
-    //     return groups;
-
-    // }, {});
     const groupedReminders = reminders.reduce((groups, reminder) => {
         const year = reminder.nextReminderDate
             ? reminder.nextReminderDate.split('-')[0]
@@ -121,7 +63,6 @@ const Reminders = (props) => {
 
             <ScrollView bounces={false}>
 
-                {/* HEADER */}
                 <View style={styles.headerContainer}>
 
                     <View style={styles.topRow}>
@@ -148,7 +89,6 @@ const Reminders = (props) => {
 
                 </View>
 
-                {/* LISTA */}
                 <View style={styles.contentContainer}>
 
                     {Object.keys(groupedReminders).map((year) => (
@@ -168,9 +108,7 @@ const Reminders = (props) => {
                                         props.navigation.navigate('EditReminder', {
                                             reminder: reminder,
                                         })
-                                    }
-                                >
-
+                                    }>
                                     <Text style={styles.cardTitle}>
                                         {reminder.maintenanceType}
                                     </Text>

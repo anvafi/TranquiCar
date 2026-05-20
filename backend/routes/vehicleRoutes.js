@@ -3,7 +3,6 @@ const Vehicle = require("../models/Vehicle");
 
 const router = express.Router();
 
-//POST
 router.post("/", async (req, res) => {
     try {
         const { brand, model, year, mileage, image, userId } = req.body;
@@ -20,7 +19,6 @@ router.post("/", async (req, res) => {
             year,
             mileage,
             image,
-            //rel
             UserId: userId,
         });
 
@@ -38,17 +36,14 @@ router.post("/", async (req, res) => {
     }
 });
 
-//GET x User
 router.get("/user/:userId", async (req, res) => {
 
     try {
 
         const { userId } = req.params;
 
-        const vehicles = await Vehicle.findAll({    //findAll
-            where: {
-                UserId: userId
-            }
+        const vehicles = await Vehicle.findAll({
+            where: { UserId: userId }
         });
 
         res.status(200).json(vehicles);
@@ -65,13 +60,12 @@ router.get("/user/:userId", async (req, res) => {
 
 });
 
-//GET x Vehículo
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
 
-        const vehicle = await Vehicle.findByPk(id);     //findByPk
-        //innecesario?
+        const vehicle = await Vehicle.findByPk(id);
+
         if (!vehicle) {
             return res.status(404).json({
                 message: "Vehículo no encontrado",

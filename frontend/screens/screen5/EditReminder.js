@@ -17,10 +17,6 @@ const EditReminder = (props) => {
 
   const { reminder } = props.route.params;
 
-  // const [title, setTitle] = useState(reminder.title);
-  // const [date, setDate] = useState(reminder.date);
-  // const [km, setKm] = useState(reminder.km);
-
   const [maintenanceType, setMaintenanceType] = useState(reminder.maintenanceType);
   const [reminderType, setReminderType] = useState(reminder.reminderType);
   const [kilometersInterval, setKilometersInterval] = useState(reminder.kilometersInterval ? String(reminder.kilometersInterval) : '');
@@ -28,22 +24,6 @@ const EditReminder = (props) => {
   const [nextReminderKm, setNextReminderKm] = useState(reminder.nextReminderKm ? String(reminder.nextReminderKm) : '');
   const [nextReminderDate, setNextReminderDate] = useState(reminder.nextReminderDate || '');
 
-  // EDITAR
-  // const handleEdit = () => {
-
-  //   const updatedReminder = {
-  //     ...reminder,
-  //     title,
-  //     date,
-  //     km,
-  //   };
-
-  //   console.log('Reminder editado:', updatedReminder);
-
-  //   Alert.alert('Éxito', 'Reminder actualizado');
-
-  //   props.navigation.goBack();
-  // };
   const handleEdit = async () => {
     try {
       const response = await fetch(
@@ -91,17 +71,12 @@ const EditReminder = (props) => {
   //         text: 'Cancelar',
   //         style: 'cancel',
   //       },
-
   //       {
   //         text: 'Eliminar',
   //         style: 'destructive',
-
   //         onPress: () => {
-
   //           console.log('Reminder eliminado:', reminder.id);
-
   //           Alert.alert('Eliminado', 'Reminder eliminado correctamente');
-
   //           props.navigation.goBack();
   //         },
   //       },
@@ -183,32 +158,8 @@ const EditReminder = (props) => {
 
         </View>
 
-        {/* CONTENIDO */}
         <View style={styles.content}>
 
-          {/* <Text style={styles.label}>Título</Text>
-
-          <TextInput
-            style={styles.input}
-            value={title}
-            onChangeText={setTitle}
-          />
-
-          <Text style={styles.label}>Fecha</Text>
-
-          <TextInput
-            style={styles.input}
-            value={date}
-            onChangeText={setDate}
-          />
-
-          <Text style={styles.label}>Kilómetros</Text>
-
-          <TextInput
-            style={styles.input}
-            value={km}
-            onChangeText={setKm}
-          /> */}
           <Text style={styles.label}>Maintenance type</Text>
           <TextInput
             style={styles.input}

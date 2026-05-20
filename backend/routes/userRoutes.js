@@ -8,16 +8,10 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
 
     // console.log(req.body);
-
-    // res.json({
-    //     message: "POST register OK",
-    //     data: req.body
-    // });
-
     try {
-        //recibir datos
+
         const { name, email, password } = req.body;
-        //validar
+
         if (!name || !email || !password) {
 
             return res.status(400).json({
@@ -25,7 +19,7 @@ router.post("/register", async (req, res) => {
             });
 
         }
-        //comprovar existente... deberia tb user??
+
         const existingUser = await User.findOne({
             where: { email }
         });
@@ -37,26 +31,16 @@ router.post("/register", async (req, res) => {
             });
 
         }
-        //crear User
+
         const user = await User.create({
             name,
             email,
             password
         });
-        //respuesta mens-json
         res.status(201).json({
             message: "Usuario registrado correctamente",
             user
         });
-
-
-        // const hashedPassword = await bcrypt.hash(password, 10);
-
-        // const user = await User.create({
-        //     name,
-        //     email,
-        //     password: hashedPassword,
-        // });
 
     } catch (error) {
 
@@ -69,8 +53,6 @@ router.post("/register", async (req, res) => {
 
     }
 });
-
-//POST login
 
 router.post("/login", async (req, res) => {
     try {
@@ -117,7 +99,5 @@ router.post("/login", async (req, res) => {
         });
     }
 });
-
-
 
 module.exports = router;

@@ -8,7 +8,7 @@ import {
   ImageBackground,
   Image,
   ScrollView,
-  Alert,  //nuevo alert
+  Alert,
 } from 'react-native';
 import { API_URL } from '../../config/api';
 
@@ -28,7 +28,7 @@ const Screen2 = (props) => {
       const response = await fetch(`${API_URL}/api/users/register`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name: `${name} ${lastName}`,
@@ -45,7 +45,7 @@ const Screen2 = (props) => {
       }
 
       Alert.alert('Éxito', data.message);
-      //lo saco del botón, para que solo navegue si res OK
+
       props.navigation.navigate('Log In');
 
     } catch (error) {
@@ -120,10 +120,6 @@ const Screen2 = (props) => {
 
         <Pressable
           style={styles.button}
-          // onPress={() => {
-          //   handleRegister();
-          //   props.navigation.navigate('Log In');
-          // }}
           onPress={handleRegister}>
           <Text style={styles.buttonText}>Register</Text>
         </Pressable>

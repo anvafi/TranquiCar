@@ -105,7 +105,6 @@ const MyVehicle = (props) => {
           <Text style={styles.headerTitle}>My Vehicle Details</Text>
         </View>
 
-        {/* INFO DEL VEHÍCULO */}
         <View style={styles.contentContainer}>
           {vehicle && (
             <View style={styles.vehicleInfoSection}>
@@ -130,7 +129,6 @@ const MyVehicle = (props) => {
                     ]}>
                     {hasCriticalReminder ? 'Revisar' : 'Al día'}
                   </Text>
-                  {/* <Text style={styles.statusText}>Al día</Text> */}
                 </View>
               </View>
             </View>
@@ -138,17 +136,6 @@ const MyVehicle = (props) => {
 
           <Text style={styles.sectionTitle}>Upcoming Maintenance</Text>
 
-          {/* LISTA DE TARJETAS (REMINDERS / MAINTENANCE) */}
-          {/* TARJETA (REMINDERS) */}
-          {/* {maintenance.map((item) => (
-            <View key={item.id} style={styles.maintenanceCard}>
-              <View>
-                <Text style={styles.cardTitle}>{item.titulo}</Text>
-                <Text style={styles.cardSubtitle}>{item.detalle}</Text>
-              </View>
-              <Text style={[styles.cardStatus, { color: item.color }]}>{item.estado}</Text>
-            </View>
-          ))} */}
           {reminders.map((item) => {
             const remainingKm =
               item.nextReminderKm - vehicle.mileage;
@@ -172,9 +159,8 @@ const MyVehicle = (props) => {
                     borderWidth: 2,
                   }
                 ]}
-                onPress={() => setSelectedReminder(item)}       //seleccionando tarjeta
+                onPress={() => setSelectedReminder(item)}
               >
-
                 <View>
                   <Text style={styles.cardTitle}>
                     {item.maintenanceType}
@@ -200,8 +186,6 @@ const MyVehicle = (props) => {
               </Pressable>
             );
           })}
-
-          {/* BOTONES DE ACCIÓN */}
 
           <Pressable
             style={styles.actionButton}

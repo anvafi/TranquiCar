@@ -54,61 +54,38 @@ const Maintenance = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-
-                {/* HEADER */}
                 <View style={styles.header}>
-
                     <View style={styles.topRow}>
-
                         <Pressable onPress={() => props.navigation.goBack()}>
                             <Ionicons name="arrow-back" size={30} color="black" />
                         </Pressable>
-
                         <Image
                             source={require('../../assets/logoNegro.png')}
                             style={styles.logo}
                             resizeMode="contain"
                         />
-
                         <View style={{ width: 30 }} />
-
                     </View>
-
                     <Text style={styles.title}>Maintenance</Text>
-
                 </View>
 
-                {/* LIST */}
                 <View style={styles.content}>
-
                     {Object.keys(group).sort((a, b) => b - a).map((year) => (
-
                         <View key={year}>
-
                             <Text style={styles.year}>{year}</Text>
 
                             {group[year].map((item) => (
-
                                 <View key={item.id} style={styles.card}>
-
                                     <Text style={styles.cardTitle}>{item.maintenanceType}</Text>
-
                                     <Text style={styles.cardSubtitle}>
                                         {item.date} - {item.kilometers} km
                                     </Text>
-
                                     <Text style={styles.cost}>{item.cost}€</Text>
-
                                 </View>
-
                             ))}
-
                         </View>
-
                     ))}
-
                 </View>
-
             </ScrollView>
         </SafeAreaView>
     );
