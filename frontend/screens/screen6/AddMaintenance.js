@@ -19,7 +19,7 @@ const AddMaintenance = (props) => {
     const { vehicleId, reminder } = props.route.params;
     console.log(reminder);
 
-    const [maintenanceType, setMaintenanceType] = useState(reminder ? reminder.maintenanceType : 'Aceite');
+    const [maintenanceType, setMaintenanceType] = useState(reminder ? reminder.maintenanceType : 'Oil');
 
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
@@ -60,13 +60,13 @@ const AddMaintenance = (props) => {
             // console.log(maintenanceData);
             const data = await response.json();
 
-            Alert.alert('Mantenimiento añadido correctamente');
+            Alert.alert('Maintenance added successfully');
 
             props.navigation.goBack();
 
         } catch (error) {
             console.log(error);
-            Alert.alert('Error', 'No se pudo conectar con el servidor');
+            Alert.alert('Error', 'Unable to connect to the server');
         }
     };
 
@@ -91,22 +91,22 @@ const AddMaintenance = (props) => {
                 </View>
 
                 <View style={styles.formContainer}>
-                    <Text style={styles.label}>Tipo de mantenimiento</Text>
+                    <Text style={styles.label}>Maintenance type</Text>
 
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={maintenanceType}
                             onValueChange={(itemValue) => setMaintenanceType(itemValue)}
                         >
-                            <Picker.Item label="Aceite" value="Aceite" />
-                            <Picker.Item label="Filtros" value="Filtros" />
-                            <Picker.Item label="Frenos" value="Frenos" />
-                            <Picker.Item label="Neumáticos" value="Neumáticos" />
+                            <Picker.Item label="Aceite" value="Oil" />
+                            <Picker.Item label="Filtros" value="Filters" />
+                            <Picker.Item label="Frenos" value="Brakes" />
+                            <Picker.Item label="Neumáticos" value="Tires" />
                             <Picker.Item label="ITV" value="ITV" />
                         </Picker>
                     </View>
 
-                    <Text style={styles.label}>Fecha</Text>
+                    <Text style={styles.label}>Date</Text>
                     <View style={styles.dateRow}>
                         <TextInput
                             style={styles.dateInput}
@@ -136,7 +136,7 @@ const AddMaintenance = (props) => {
 
                     <View style={styles.doubleInputRow}>
                         <View style={styles.doubleInputBox}>
-                            <Text style={styles.label}>Kilometraje</Text>
+                            <Text style={styles.label}>Mileage</Text>
                             <View style={styles.inputWithSuffix}>
                                 <TextInput
                                     style={styles.inputHalf}
@@ -149,7 +149,7 @@ const AddMaintenance = (props) => {
                             </View>
                         </View>
                         <View style={styles.doubleInputBox}>
-                            <Text style={styles.label}>Coste</Text>
+                            <Text style={styles.label}>Cost</Text>
                             <View style={styles.inputWithSuffix}>
                                 <TextInput
                                     style={styles.inputHalf}
@@ -164,7 +164,7 @@ const AddMaintenance = (props) => {
                     </View>
 
                     {/* NOTAS */}
-                    <Text style={styles.label}>Notas</Text>
+                    <Text style={styles.label}>Grades</Text>
 
                     <TextInput
                         style={styles.notesInput}
