@@ -59,7 +59,7 @@ const Screen1 = (props) => {
       style={styles.container}
     >
       <View style={styles.overlay}>
-        <Image source={require('../../assets/Image.png')}
+        <Image source={require('../../assets/logoBlanco.png')}
           style={styles.logo}
         />
 
