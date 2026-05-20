@@ -220,9 +220,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   textButton: {
-    margin: 24,
-    fontSize: 30,
-    color: 'white',
-    textAlign: 'center'
-  },
+  fontSize: 30,
+  color: 'white',
+  fontWeight: 'bold',
+},
 });
