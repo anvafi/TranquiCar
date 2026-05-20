@@ -182,19 +182,19 @@ const MyVehicle = (props) => {
 
                   {item.kilometersInterval ? (
                     <Text style={styles.cardSubtitle}>
-                      Cada {item.kilometersInterval} km
+                      Every {item.kilometersInterval} km
                     </Text>
                   ) : null}
 
                   {item.monthsInterval ? (
                     <Text style={styles.cardSubtitle}>
-                      Cada {item.monthsInterval} meses
+                      Every {item.monthsInterval} month
                     </Text>
                   ) : null}
                 </View>
 
                 <Text style={[styles.cardStatus, { color: statusColor }]}>
-                  En {remainingKm.toLocaleString()} Km
+                  In {remainingKm.toLocaleString()} Km
                 </Text>
 
               </Pressable>
