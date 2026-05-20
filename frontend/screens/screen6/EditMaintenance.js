@@ -22,15 +22,16 @@ const EditMaintenance = (props) => {
   const { maintenance } = props.route.params;
 
   // SEPARAR FECHA
-  const splitDate = maintenance.date.split('/');
 
   const [maintenanceType, setMaintenanceType] = useState(
     maintenance.maintenanceType
   );
+  const splitDate = maintenance.date.split('-');          //he cambiado el split "/", el back devuelve "-"
+  const [yearValue, monthValue, dayValue] = splitDate;
 
-  const [day, setDay] = useState(splitDate[0]);
-  const [month, setMonth] = useState(splitDate[1]);
-  const [year, setYear] = useState(splitDate[2]);
+  const [day, setDay] = useState(dayValue);
+  const [month, setMonth] = useState(monthValue);
+  const [year, setYear] = useState(yearValue);
 
   const [kilometers, setKilometers] = useState(
     maintenance.kilometers.toString()
@@ -45,63 +46,86 @@ const EditMaintenance = (props) => {
   );
 
   // EDITAR
-  const handleEditMaintenance = () => {
+  const handleEditMaintenance = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.34:3000/api/maintenance/${maintenance.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            maintenanceType,
+            date: `${year}-${month}-${day}`,
+            kilometers: Number(kilometers),
+            cost: cost ? Number(cost) : null,
+            notes,
+          }),
+        }
+      );
 
-    const updatedMaintenance = {
-      ...maintenance,
+      const data = await response.json();
 
-      maintenanceType,
+      if (!response.ok) {
+        Alert.alert('Error', data.message || 'No se pudo actualizar');
+        return;
+      }
 
-      date: `${day}/${month}/${year}`,
+      Alert.alert('Mantenimiento actualizado correctamente', data.message);
+      props.navigation.goBack();
 
-      kilometers,
-      cost,
-      notes,
-    };
-
-    console.log('Maintenance actualizado:', updatedMaintenance);
-
-    Alert.alert(
-      'Éxito',
-      'Mantenimiento actualizado correctamente'
-    );
-
-    props.navigation.goBack();
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'No se pudo conectar con el servidor');
+    }
   };
+  //   const updatedMaintenance = {
+  //     ...maintenance,
+
+  //     maintenanceType,
+
+  //     date: `${day}/${month}/${year}`,
+
+  //     kilometers,
+  //     cost,
+  //     notes,
+  //   };
+
+  //   console.log('Maintenance actualizado:', updatedMaintenance);
+
+  //   Alert.alert(
+  //     'Éxito',
+  //     'Mantenimiento actualizado correctamente'
+  //   );
+
+  //   props.navigation.goBack();
+  // };
 
   // ELIMINAR
-  const handleDeleteMaintenance = () => {
-
-    Alert.alert(
-      'Eliminar mantenimiento',
-      '¿Seguro que quieres eliminar este mantenimiento?',
-      [
+  const handleDeleteMaintenance = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.34:3000/api/maintenance/${maintenance.id}`,
         {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
+          method: 'DELETE',
+        }
+      );
 
-        {
-          text: 'Eliminar',
-          style: 'destructive',
+      const data = await response.json();
 
-          onPress: () => {
+      if (!response.ok) {
+        Alert.alert('Error', data.message || 'No se pudo eliminar');
+        return;
+      }
 
-            console.log(
-              'Maintenance eliminado:',
-              maintenance.id
-            );
+      Alert.alert('Eliminado', data.message);
+      props.navigation.goBack();
 
-            Alert.alert(
-              'Eliminado',
-              'Mantenimiento eliminado correctamente'
-            );
-
-            props.navigation.goBack();
-          },
-        },
-      ]
-    );
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'No se pudo conectar con el servidor');
+    }
   };
 
   return (

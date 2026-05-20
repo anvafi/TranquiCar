@@ -43,9 +43,9 @@ export default function App() {
                     <Stack.Screen name="Reminder" component={Reminder} />
                     <Stack.Screen name="AddMaintenance" component={AddMaintenance} />
                     <Stack.Screen name="Maintenance" component={Maintenance} />
+                    <Stack.Screen name="EditMaintenance" component={EditMaintenance} />
                     {/* <Stack.Screen name="Forgot Password" component={ForgotPassword} />
                     <Stack.Screen name="EditReminder" component={EditReminder} /> */}
-                    <Stack.Screen name="EditMaintentance" component={EditMaintenance} />
                 </Stack.Navigator>
             </NavigationContainer>
 

@@ -157,9 +157,17 @@ const MyVehicle = (props) => {
                 {item.cost ? `${item.cost}€` : ''}
               </Text>
 
-              <Pressable onPress={() => deleteMaintenance(item.id)}>
-                <Text style={{ color: 'red', marginTop: 8 }}>Eliminar</Text>
+              <Pressable
+                onPress={() => props.navigation.navigate('EditMaintenance', {
+                  maintenance: item,
+                })}
+              >
+                <Text style={{ color: '#8B1A1A', marginTop: 8 }}>Editar</Text>
               </Pressable>
+
+              {/* <Pressable onPress={() => deleteMaintenance(item.id)}>
+                <Text style={{ color: 'red', marginTop: 8 }}>Eliminar</Text>
+              </Pressable> */}
             </View>
           ))}
 
