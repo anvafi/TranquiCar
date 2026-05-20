@@ -1,13 +1,21 @@
 # Características principales
 
 Registro e inicio de sesión de usuarios
+
 Garaje virtual con múltiples vehículos
+
 Gestión de mantenimientos
+
 Recordatorios automáticos por kilómetros o tiempo
+
 Historial de mantenimientos
+
 Alertas visuales de mantenimiento próximo
+
 Edición y eliminación de registros
+
 Backend REST API
+
 Base de datos PostgreSQL
 
 # Tecnologías utilizadas
