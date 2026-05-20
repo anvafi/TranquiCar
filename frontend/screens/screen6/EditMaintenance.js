@@ -69,16 +69,16 @@ const EditMaintenance = (props) => {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo actualizar');
+        Alert.alert('Error', data.message || 'Could not update');
         return;
       }
 
-      Alert.alert('Mantenimiento actualizado correctamente', data.message);
+      Alert.alert('Successfully updated maintenance', data.message);
       props.navigation.goBack();
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'No se pudo conectar con el servidor');
+      Alert.alert('Error', 'Unable to connect to the server');
     }
   };
   //   const updatedMaintenance = {
@@ -116,16 +116,16 @@ const EditMaintenance = (props) => {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo eliminar');
+        Alert.alert('Error', data.message || 'Could not delete');
         return;
       }
 
-      Alert.alert('Eliminado', data.message);
+      Alert.alert('Deleted', data.message);
       props.navigation.goBack();
 
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'No se pudo conectar con el servidor');
+      Alert.alert('Error', 'Unable to connect to the server');
     }
   };
 
@@ -167,7 +167,7 @@ const EditMaintenance = (props) => {
 
           {/* TIPO */}
           <Text style={styles.label}>
-            Tipo de mantenimiento
+            Maintenance type
           </Text>
 
           <View style={styles.pickerContainer}>
@@ -180,23 +180,23 @@ const EditMaintenance = (props) => {
             >
 
               <Picker.Item
-                label="Aceite"
-                value="Aceite"
+                label="Oil"
+                value="Oil"
               />
 
               <Picker.Item
-                label="Filtros"
-                value="Filtros"
+                label="Filters"
+                value="Filters"
               />
 
               <Picker.Item
-                label="Frenos"
-                value="Frenos"
+                label="Brakes"
+                value="Brakes"
               />
 
               <Picker.Item
-                label="Neumáticos"
-                value="Neumaticos"
+                label="Tires"
+                value="Tires"
               />
 
               <Picker.Item
@@ -209,7 +209,7 @@ const EditMaintenance = (props) => {
           </View>
 
           {/* FECHA */}
-          <Text style={styles.label}>Fecha</Text>
+          <Text style={styles.label}>Date</Text>
 
           <View style={styles.dateRow}>
 
@@ -245,7 +245,7 @@ const EditMaintenance = (props) => {
             <View style={styles.doubleInputBox}>
 
               <Text style={styles.label}>
-                Kilometraje
+                Mileage
               </Text>
 
               <View style={styles.inputWithSuffix}>
@@ -268,7 +268,7 @@ const EditMaintenance = (props) => {
             <View style={styles.doubleInputBox}>
 
               <Text style={styles.label}>
-                Coste
+                Cost
               </Text>
 
               <View style={styles.inputWithSuffix}>
@@ -291,7 +291,7 @@ const EditMaintenance = (props) => {
           </View>
 
           {/* NOTAS */}
-          <Text style={styles.label}>Notas</Text>
+          <Text style={styles.label}>Grades</Text>
 
           <TextInput
             style={styles.notesInput}
@@ -307,7 +307,7 @@ const EditMaintenance = (props) => {
             onPress={handleEditMaintenance}
           >
             <Text style={styles.buttonText}>
-              Guardar cambios
+              Save changes
             </Text>
           </Pressable>
 
@@ -317,7 +317,7 @@ const EditMaintenance = (props) => {
             onPress={handleDeleteMaintenance}
           >
             <Text style={styles.buttonText}>
-              Eliminar mantenimiento
+              Delete maintenance
             </Text>
           </Pressable>
 
