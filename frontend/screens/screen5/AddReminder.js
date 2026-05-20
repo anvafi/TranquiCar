@@ -187,7 +187,7 @@ const AddReminder = (props) => {
               <MaterialIcons name="arrow-back" size={28} color="white" />
             </Pressable>
             <Image
-              source={require('../../assets/Image.png')}
+              source={require('../../assets/logoBlanco.png')}
               style={styles.logo}
               resizeMode="contain"
             />
