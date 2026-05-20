@@ -40,7 +40,7 @@ const Screen2 = (props) => {
       const data = await response.json();
 
       if (!response.ok) {
-        Alert.alert('Error', data.message || 'No se pudo registrar');
+        Alert.alert('Error', data.message || 'Could not register');
         return;
       }
 
