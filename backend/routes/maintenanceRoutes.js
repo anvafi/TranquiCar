@@ -34,6 +34,13 @@ router.post("/", async (req, res) => {
             notes,
             VehicleId: vehicleId,
         });
+        const vehicle = await Vehicle.findByPk(vehicleId);
+
+        if (vehicle && Number(kilometers) > Number(vehicle.mileage)) {      //evitar que un mantenimiento antiguo baje el kilometraje actual del vehículo.
+            await vehicle.update({
+                mileage: Number(kilometers),
+            });
+        }
         //
         if (reminderId) {
 
