@@ -176,7 +176,7 @@ const Reminders = (props) => {
                                     </Text>
 
                                     <Text style={styles.cardSubtitle}>
-                                        {reminder.nextReminderDate || 'Sin fecha'} - {reminder.nextReminderKm || 'Sin km'} km
+                                        {reminder.nextReminderDate || 'Undated'} - {reminder.nextReminderKm || 'without km'} km
                                     </Text>
 
                                 </Pressable>
