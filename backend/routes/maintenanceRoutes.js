@@ -1,6 +1,7 @@
 const express = require("express");
 const Maintenance = require("../models/Maintenance");
 const Vehicle = require("../models/Vehicle");
+// const { DELETE } = require("sequelize/lib/query-types");
 
 const router = express.Router();
 
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-// GET maintenances x vehículo
+//GET maintenances x vehículo
 
 router.get("/vehicle/:vehicleId", async (req, res) => {
 
@@ -78,7 +79,7 @@ router.get("/vehicle/:vehicleId", async (req, res) => {
 
 });
 
-// GET maintenances x user (global)
+//GET maintenances x user (global)
 
 router.get("/user/:userId", async (req, res) => {
     try {
@@ -103,6 +104,79 @@ router.get("/user/:userId", async (req, res) => {
 
         res.status(500).json({
             message: "Error obteniendo mantenimientos del user",
+        });
+    }
+});
+
+//DELETE maintenace x id
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const maintenance = await Maintenance.findByPk(id);
+
+        if (!maintenance) {
+            return res.status(404).json({
+                message: "Mantenimiento no encontrado",
+            });
+        }
+
+        await maintenance.destroy();
+
+        res.status(200).json({
+            message: "Mantenimiento eliminado correctamente",
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error eliminando mantenimiento",
+        });
+    }
+});
+
+//PUT maintenace x id
+
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const {
+            maintenanceType,
+            date,
+            kilometers,
+            cost,
+            notes,
+        } = req.body;
+
+        const maintenance = await Maintenance.findByPk(id);
+
+        if (!maintenance) {
+            return res.status(404).json({
+                message: "Mantenimiento no encontrado",
+            });
+        }
+
+        await maintenance.update({
+            maintenanceType,
+            date,
+            kilometers,
+            cost,
+            notes,
+        });
+
+        res.status(200).json({
+            message: "Mantenimiento actualizado correctamente",
+            maintenance,
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error actualizando mantenimiento",
         });
     }
 });
