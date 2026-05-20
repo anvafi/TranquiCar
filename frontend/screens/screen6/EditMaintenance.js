@@ -38,8 +38,8 @@ const EditMaintenance = (props) => {
   );
 
   const [cost, setCost] = useState(
-    maintenance.cost.toString()
-  );
+  maintenance.cost ? maintenance.cost.toString() : ''
+);
 
   const [notes, setNotes] = useState(
     maintenance.notes || ''
