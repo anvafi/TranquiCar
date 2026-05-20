@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Image, ScrollView, SafeAreaView, Switch, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const ReminderBlock = ({
   title,
@@ -182,7 +183,7 @@ const AddReminder = (props) => {
       }
 
       for (const reminder of remindersToCreate) {
-        const response = await fetch('http://192.168.1.34:3000/api/reminders', {
+        const response = await fetch('${API_URL}/api/reminders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

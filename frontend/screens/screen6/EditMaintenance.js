@@ -16,6 +16,7 @@ import {
 
 import { Picker } from '@react-native-picker/picker';
 import { MaterialIcons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const EditMaintenance = (props) => {
 
@@ -38,8 +39,8 @@ const EditMaintenance = (props) => {
   );
 
   const [cost, setCost] = useState(
-  maintenance.cost ? maintenance.cost.toString() : ''
-);
+    maintenance.cost ? maintenance.cost.toString() : ''
+  );
 
   const [notes, setNotes] = useState(
     maintenance.notes || ''
@@ -49,7 +50,7 @@ const EditMaintenance = (props) => {
   const handleEditMaintenance = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:3000/api/maintenance/${maintenance.id}`,
+        `${API_URL}/api/maintenance/${maintenance.id}`,
         {
           method: 'PUT',
           headers: {

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const MyVehicle = (props) => {
   const [vehicle, setVehicle] = useState(null);
@@ -31,7 +32,7 @@ const MyVehicle = (props) => {
     try {
 
       const vehicleResponse = await fetch(
-        `http://192.168.1.34:3000/api/vehicles/${vehicleId}`
+        `${API_URL}/api/vehicles/${vehicleId}`
       );
 
       const vehicleData = await vehicleResponse.json();
@@ -39,7 +40,7 @@ const MyVehicle = (props) => {
       setVehicle(vehicleData);
 
       const remindersResponse = await fetch(
-        `http://192.168.1.34:3000/api/reminders/vehicle/${vehicleId}`
+        `${API_URL}/api/reminders/vehicle/${vehicleId}`
       );
 
       const remindersData = await remindersResponse.json();

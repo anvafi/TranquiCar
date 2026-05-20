@@ -13,6 +13,7 @@ import {
 
 import { Picker } from '@react-native-picker/picker';
 import { MaterialIcons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const AddMaintenance = (props) => {
     const { vehicleId, reminder } = props.route.params;
@@ -40,7 +41,7 @@ const AddMaintenance = (props) => {
         // };
         try {
 
-            const response = await fetch('http://192.168.1.34:3000/api/maintenance', {
+            const response = await fetch('${API_URL}/api/maintenance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

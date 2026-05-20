@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   StyleSheet,
   Text,
@@ -11,8 +10,8 @@ import {
   Image,
   Alert,
 } from 'react-native';
-
 import { MaterialIcons } from '@expo/vector-icons';
+import { API_URL } from '../../config/api';
 
 const EditReminder = (props) => {
 
@@ -48,7 +47,7 @@ const EditReminder = (props) => {
   const handleEdit = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.34:3000/api/reminders/${reminder.id}`,
+        `${API_URL}/api/reminders/${reminder.id}`,
         {
           method: 'PUT',
           headers: {

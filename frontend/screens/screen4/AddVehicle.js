@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Context from '../../context/Context';
+import { API_URL } from '../../config/api';
 
 //libreria de EXPO (buscar alternativas??)
 import * as ImagePicker from 'expo-image-picker';
@@ -36,7 +37,7 @@ const AddVehicle = (props) => {
     // props.navigation.goBack();
 
     try {
-      const response = await fetch('http://192.168.1.34:3000/api/vehicles', {
+      const response = await fetch('${API_URL}/api/vehicles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON

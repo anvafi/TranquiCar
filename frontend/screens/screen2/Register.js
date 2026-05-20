@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,  //nuevo alert
 } from 'react-native';
+import { API_URL } from '../../config/api';
 
 const Screen2 = (props) => {
   const [name, setName] = useState('');
@@ -24,7 +25,7 @@ const Screen2 = (props) => {
 
   async function handleRegister() {
     try {
-      const response = await fetch('http://192.168.1.34:3000/api/users/register', {
+      const response = await fetch('${API_URL}/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON

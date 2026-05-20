@@ -10,6 +10,7 @@ import {
   Alert
 } from 'react-native';
 import Context from '../../context/Context';
+import { API_URL } from '../../config/api';
 
 const Screen1 = (props) => {
   const [screen, setScreen] = useState('login');
@@ -19,7 +20,7 @@ const Screen1 = (props) => {
 
   async function handleLogin() {
     try {
-      const response = await fetch('http://192.168.1.34:3000/api/users/login', {
+      const response = await fetch('${API_URL}/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',   //NECESARIO para que sepa el backend que el string es de un JSON
