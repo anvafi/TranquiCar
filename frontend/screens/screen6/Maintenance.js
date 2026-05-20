@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
     StyleSheet,
     Text,
@@ -8,24 +8,26 @@ import {
     Pressable,
     Image,
 } from 'react-native';
-
-// import AsyncStorage from '@react-native-async-storage/async-storage';    en principio no necesario con bbdd
+import Context from '../../context/Context';
 import { Ionicons } from '@expo/vector-icons';
 
 const Maintenance = (props) => {
 
     const [maintenances, setMaintenances] = useState([]);
+    const { user } = useContext(Context);
 
     const loadMaintenances = async () => {
         try {
-            const data = await AsyncStorage.getItem('maintenances');
+            const response = await fetch(
+                `http://192.168.1.34:3000/api/maintenance/user/${user.id}`
+            );
 
-            if (data !== null) {
-                setMaintenances(JSON.parse(data));
-            }
+            const data = await response.json();
+
+            setMaintenances(data);
 
         } catch (error) {
-            console.log('Error loading maintenances', error);
+            console.log('Error cargando mantenimientos', error);
         }
     };
 
@@ -38,7 +40,8 @@ const Maintenance = (props) => {
     }, [props.navigation]);
 
     const group = maintenances.reduce((acc, item) => {
-        const year = item.year;
+        // const year = item.year;
+        const year = item.date?.split('-')[0];
 
         if (!acc[year]) acc[year] = [];
 

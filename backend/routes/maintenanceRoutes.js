@@ -1,5 +1,6 @@
 const express = require("express");
 const Maintenance = require("../models/Maintenance");
+const Vehicle = require("../models/Vehicle");
 
 const router = express.Router();
 
@@ -70,11 +71,40 @@ router.get("/vehicle/:vehicleId", async (req, res) => {
         console.log(error);
 
         res.status(500).json({
-            message: "Error obteniendo mantenimientos"
+            message: "Error obteniendo mantenimientos del vehiculo"
         });
 
     }
 
+});
+
+// GET maintenances x user (global)
+
+router.get("/user/:userId", async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const maintenances = await Maintenance.findAll({
+            include: [
+                {
+                    model: Vehicle,
+                    where: {
+                        UserId: userId,
+                    },
+                },
+            ],
+            order: [["date", "DESC"]],              //ver si lo gestionamos de otra manera
+        });
+
+        res.status(200).json(maintenances);
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Error obteniendo mantenimientos del user",
+        });
+    }
 });
 
 module.exports = router;
