@@ -28,7 +28,7 @@ const Maintenance = (props) => {
             setMaintenances(data);
 
         } catch (error) {
-            console.log('Error cargando mantenimientos', error);
+            console.log('Error loading maintenance', error);
         }
     };
 
