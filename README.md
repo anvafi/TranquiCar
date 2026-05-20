@@ -26,26 +26,6 @@ DevOps / Cloud:
 Render
 GitHub
 
-# Arquitectura del proyecto
-
-TranquiCar/
-│
-├── frontend/
-│ ├── assets/
-│ ├── config/
-│ ├── context/
-│ ├── screens/
-│ └── App.js
-│
-├── backend/
-│ ├── config/
-│ ├── models/
-│ ├── routes/
-│ ├── App.js
-│ └── Server.js
-│
-└── README.md
-
 # Clonar repositorio
 
 $ git clone https://github.com/TU-USUARIO/TranquiCar.git
